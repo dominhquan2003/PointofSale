@@ -1,0 +1,97 @@
+<div class="content-page">
+  <div class="container-fluid add-form-list">
+    <div class="row">
+       <div class="col-sm-12 mb-4">
+                <a href="/products/" class="btn btn-primary"><i class="fa-solid fa-chevron-left"></i> Back to list
+                </a>
+            </div>
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+              <h4 class="card-title">Add Product</h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <form action="/products/addProduct" method="POST" enctype="multipart/form-data" data-toggle="validator">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Brands*</label>
+                    <select class="selectpicker form-control" data-style="py-0" name="categoryid">
+                      {{#each categories}}
+                      <option value="{{this.id}}">{{this.name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Name *</label>
+                    <input type="text" class="form-control" placeholder="Enter Name" name="name"
+                      data-errors="Please Enter Name." required />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Barcode *</label>
+                    <input type="text" class="form-control" placeholder="Enter barcode" name="barcode"
+                      data-errors="Please Enter Code." required />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Import price *</label>
+                    <input type="number" class="form-control" placeholder="Enter import price" name="iprice"
+                      data-errors="Please Enter Cost." required />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Retail price *</label>
+                    <input type="number" class="form-control" placeholder="Enter retail price" name="rprice"
+                      data-errors="Please Enter Price." required />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Quantity *</label>
+                    <input type="number" class="form-control" placeholder="Enter Quantity" name="quantity" required />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Image*</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile" name="image" />
+                      <label class="custom-file-label" for="customFile">Choose
+                        file</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{#if error}}
+              <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                  <div class="iq-alert-icon">
+                    <i class="ri-information-line"></i>
+                  </div>
+                  <div class="iq-alert-text"> <b>Error</b> {{error}}</div>
+                </div>
+              </div>
+              {{/if}}
+              <button type="submit" class="btn btn-primary mr-2">Add Product</button>
+              <button type="reset" class="btn btn-danger">Reset</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page end  -->
+  </div>
+</div>

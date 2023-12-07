@@ -1,0 +1,71 @@
+<div class="content-page">
+    <div class="container-fluid add-form-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                    
+                    <a href="/categories/" class="btn btn-primary add-list"><i class="fa-solid fa-chevron-left"></i> Back to list Category </a>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Update category</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/categories/update/{{category.code}}" method="POST" data-toggle="validator">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Category Name *</label>
+                                        <input type="text" class="form-control" placeholder="Enter Category Name"
+                                            name="name" value="{{category.name}}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Code *</label>
+                                        <input type="text" class="form-control" placeholder="Enter Code" name="code" value="{{category.code}}"
+                                            required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                {{#if success}}
+                                <div class="col-md-12">
+                                    <div class="alert alert-success" role="alert">
+                                        <div class="iq-alert-icon">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+                                        <div class="iq-alert-text"> <b>Success</b> {{success}}</div>
+                                    </div>
+                                </div>
+                                {{/if}}
+
+                                {{#if error}}
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <div class="iq-alert-icon">
+                                            <i class="ri-information-line"></i>
+                                        </div>
+                                        <div class="iq-alert-text"> <b>Error</b> {{error}}</div>
+                                    </div>
+                                </div>
+
+                                {{/if}}
+
+                               
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Update category</button>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+</div>

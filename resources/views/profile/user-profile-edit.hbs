@@ -1,0 +1,174 @@
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            {{#if success}}
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Success</b> {{success}}</div>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if error}}
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-information-line"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Error</b> {{error}}</div>
+                </div>
+            </div>
+             {{/if}}
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="iq-edit-list usr-edit">
+                            <ul class="iq-edit-profile d-flex nav nav-pills">
+                                <li class="col-md-3 p-0">
+                                    <a class="nav-link active" data-toggle="pill" href="#personal-information">
+                                        Personal Information
+                                    </a>
+                                </li>
+                                <li class="col-md-3 p-0">
+                                    <a class="nav-link" data-toggle="pill" href="#chang-pwd">
+                                        Change Password
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="iq-edit-list-data">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                        <h4 class="card-title">Personal Information (<strong class="" style="color: red;">* User just update their avatar </strong>)</h4>
+                                        <small>Just choose an image from your device and click button submit the avatar will change after that</small>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/profile/editProfile/{{user.id}}" method="POST" enctype="multipart/form-data">
+                                        <div class="form-group row align-items-center">
+                                            <div class="col-md-12">
+                                                <div class="profile-img-edit">
+                                                    <div class="crm-profile-img-edit">
+                                                        <img class="crm-profile-pic rounded-circle avatar-100"
+                                                            src="../assets/images/user/{{user.avatar}}" alt="profile-pic">
+                                                        <div class="crm-p-image bg-primary">
+                                                            <i class="las la-pen upload-button"></i>
+                                                            <input class="file-upload"  type="file" accept="image/*" name="image">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" row align-items-center">
+                                            <div class="form-group col-sm-12">
+                                                <label for="fname">Full Name:</label>
+                                                <input type="text" class="form-control" id="fname" name="name" value="{{user.fullname}}" disabled>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="lname">Age:</label>
+                                                <input type="number" class="form-control" id="lname" name="age" value="{{user.age}}" disabled>
+                                            </div>
+
+                                            <div class="form-group col-sm-6">
+                                                <label for="phone">Phone:</label>
+                                                <input type="number" class="form-control" id="phone" name="phone" value="{{user.phone}}" disabled>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>Gender: </label>
+                                                <select class="selectpicker form-control" data-style="py-0"
+                                                    name="gender" value="{{user.gender}}" disabled>
+                                                    <option name="male" value="1" >Male</option>
+                                                    <option name="female" value="0" >Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>Role: </label>
+                                                <select class="selectpicker form-control" data-style="py-0"
+                                                    name="role" value="{{user.role}}" disabled>
+                                                    
+                                                    <option name="admin" value="Admin" >Admin</option>
+                                                    <option name="user" value="User" >User</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>Status: </label>
+                                                <select class="selectpicker form-control" data-style="py-0"
+                                                    name="status" value="{{user.status}}" disabled>
+                                                    
+                                                    <option name="active" value="1" >Active</option>
+                                                    <option name="inactive" value="0" >Anactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>Lock status: </label>
+                                                <select class="selectpicker form-control" data-style="py-0"
+                                                    name="lock_status" value="{{user.lock_status}}" disabled>
+                                                    <option name="lock" value="1" >Lock</option>
+                                                    <option name="unlock" value="0" >Unlock</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="fname">Created Date:</label>
+                                                <input type="text" class="form-control" id="fname" name="createdAt" value="{{user.createdAt}}" disabled>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label>Address:</label>
+                                                <textarea class="form-control" name="address" rows="5"
+                                                    style="line-height: 22px;" value="{{user.address}}" disabled>
+                                                    {{user.address}}
+                                                </textarea>
+                                            </div>
+                                            
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                        <h4 class="card-title">Change Password</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/authen/changePassword" method="POST">
+                                        <div class="form-group">
+                                            <label for="cpass">Current Password:</label>
+                                            <input type="Password" class="form-control" id="cpass" name="cpass" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="npass">New Password:</label>
+                                            <input type="Password" class="form-control" id="npass" name="npass" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="vpass">Verify Password:</label>
+                                            <input type="Password" class="form-control" id="vpass" name="vpass" value="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

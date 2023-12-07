@@ -1,0 +1,327 @@
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            {{#if success}}
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Success</b> {{success}}</div>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if error}}
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-information-line"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Error</b> {{error}}</div>
+                </div>
+            </div>
+
+            {{/if}}
+            <div class="col-lg-12">
+                <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                    <div>
+                        <h4 class="mb-3">User List</h4>
+                        <p class="mb-0">A dashboard provides you an overview of user list with access to the most
+                            important data,<br>
+                            functions and controls. </p>
+                    </div>
+                    <a href="/users/add" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add
+                        User</a>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="table-responsive rounded mb-3">
+                    <table class="data-table table mb-0 tbl-server-info text-center">
+                        <thead class="bg-white text-uppercase">
+                            <tr class="ligth ligth-data">
+                                <th># Index</th>
+                                <th>Avatar</th>
+                                <th>Full name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Gender</th>
+                                {{!-- <th>Role</th>
+                                <th>Created Time</th> --}}
+                                <th>Activation</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="ligth-body" >
+                            {{#each users}}
+                            <tr class="userList_{{this.id}}" id="{{this.id}}">
+                                <td>{{sum @index 1}}</td>
+                                <td>
+                                    <img src="../assets/images/user/{{this.avatar}}" class="img-fluid rounded avatar-80"
+                                        alt="image">
+                                </td>
+                                <td>{{this.fullname}}</td>
+                                <td>+84 {{this.phone}}</td>
+                                <td>{{this.address}}</td>
+                                <td>
+                                    {{#if this.gender}}
+                                    male
+                                    {{else}}
+                                    female
+                                    {{/if}}
+                                </td>
+                                {{!-- <td>{{this.role}}</td>
+                                <td>{{this.createdAt}}</td> --}}
+                                <td>
+                                    {{#if this.status}}
+                                    <div class="badge badge-success">active</div>
+                                    {{else}}
+                                    <div class="badge badge-warning">inactive</div>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{#if this.lock_status}}
+                                    <div class="badge badge-warning">lock</div>
+                                    {{else}}
+                                    <div class="badge badge-success">unlock</div>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center list-action">
+
+                                        <a class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top"
+                                            title="" data-original-title="View" href="/users/{{this.id}}"><i
+                                                class="ri-eye-line mr-0"></i></a>
+                                        <a href="#informationOrderModal" class="btn-order-user badge badge-danger mr-2"
+                                            data-id="{{this.id}}" data-toggle="modal" data-placement="top"><i
+                                                class="fa-solid fa-file-invoice"></i></a>
+
+                                        <a href="" class="badge bg-warning mr-2 lockBtn" data-toggle="modal"
+                                            data-id="{{this.id}}" data-name="{{this.fullname}}" data-placement="top"
+                                            title="" data-original-title="lock"><i class="fa-solid fa-user-lock"></i>
+                                        </a>
+                                        <a href="#send-mail" class="badge bg-success mr-2 sendMailbtn"
+                                            data-toggle="modal" data-placement="top" data-id="{{this.accountId}}"
+                                            data-name="{{this.fullname}}" title="" data-original-title="Mail">
+                                            <i class="fa-regular fa-envelope"></i>
+                                        </a>
+
+
+
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+    <div class="modal fade" id="send-mail" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="popup text-left">
+                        <div class="media align-items-top justify-content-between">
+                            <h3 class="mb-3">Resend Mail </h3>
+                            <div class="btn-cancel p-0" data-dismiss="modal"><i class="las la-times"></i></div>
+                        </div>
+                        <div class="content edit-notes">
+                            <div class="card card-transparent card-block card-stretch event-note mb-0">
+                                <div class="card-body px-0 bukmark">
+                                    <div
+                                        class="d-flex align-items-center justify-content-between pb-2 mb-3 border-bottom">
+                                        <div class="quill-tool">
+                                        </div>
+                                    </div>
+                                    <div id="quill-toolbar1">
+                                        <p>Admin can resend mail for <strong class="sendMailforuser"></strong> to login
+                                            into system or resend mail when this user got expired mail</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer border-0">
+                                    <div class="d-flex flex-wrap align-items-ceter justify-content-end">
+                                        <div class="btn btn-primary mr-3" data-dismiss="modal">Cancel</div>
+                                        <div class="btn btn-outline-primary btn-confirm-sendMail" data-dismiss="modal">
+                                            send</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="lockEmployeeModal" class="modal fade" aria-hidden="true" data-dismiss="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/users/lockUser" method="post" id="target">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Lock or unlock user</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure with your decision with this user : <strong class="lock-name">ABC</strong>
+                        </p>
+                        <p class="text-warning"><small>This action cannot be undone. If the user is locked, change it to
+                                unlock or vice versa </small></p>
+                    </div>
+                    <input type="hidden" name="id" id="userIdInput" value="">
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger btn-confirm-delete" aria-hidden="true" data-id=""
+                            data-dismiss="modal" value="Accept">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="informationOrderModal" tabindex="-1" role="dialog" data-dismiss="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enterCustomerTitle">Order detail information </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center black" scope="col">#Index</th>
+                                        <th scope="col" class="black">Order ID</th>
+                                        <th>Total </th>
+                                        <th class="text-center black" scope="col">Cash</th>
+                                        <th class="text-center black" scope="col">Refund</th>
+                                        <th>Status</th>
+                                        <th>Created Date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_userOrder" class="text-center">
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.lockBtn').click(function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            console.log(name, id)
+            $('#userIdInput').val(id);
+            $('.lock-name').html(name);
+            $('.btn-confirm-delete').attr('data-id', id);
+
+            $('#lockEmployeeModal').modal('show');
+        });
+        $('.btn-confirm-delete').click(e => {
+            e.preventDefault();
+            let id = e.target.dataset.id;
+            $("#target").trigger("submit")
+            $('#lockEmployeeModal').modal('hide');
+        })
+        $('.sendMailbtn').click(function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            console.log(name, id)
+            $('.sendMailforuser').html(name);
+            $('.btn-confirm-sendMail').attr('data-id', id);
+            $('#send-mail').modal('show');
+        });
+        $('.btn-confirm-sendMail').click(e => {
+            e.preventDefault();
+            let id = e.target.dataset.id;
+            console.log(id)
+            ResendMail(id);
+            $('#send-mail').modal('hide');
+        })
+        function ResendMail(id) {
+            const url = window.location.origin;
+            fetch(`${url}/authen/resendMail`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${encodeURIComponent(id)}`
+            })
+                .then(res => console.log(res.json()))
+
+                .catch(e => console.log(e))
+        }
+
+        $('.btn-order-user').click(function (e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+            console.log(id);
+            getUserOrders(id);
+        });
+        function getUserOrders(id) {  
+            const url = window.location.origin;  
+            fetch(`${url}/users/getUserOrders?id=${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    UpdateUIUserOrder(data)
+
+                })
+                .catch(error => console.log('Error fetching orders:', error));
+        }
+        UpdateUIUserOrder = data => {
+            const tbody = document.getElementById('tbody_userOrder');
+            tbody.innerHTML = '';
+            data.data.forEach((order, index)=> {
+                const row = document.createElement('tr');
+                const statusBadge = order.status === 1
+                    ? '<span class="badge badge-success" id="paid">Paid</span>'
+                    : '<span class="badge badge-danger" id="unpaid">Unpaid</span>';
+
+                const formattedDate = new Date(order.createdAt).toLocaleString();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${order.id}</td>
+                    <td>${order.totalprice}</td>
+                    <td>${order.payment}</td>
+                    <td>${order.refund}</td>
+                    <td>${statusBadge}</td>
+                    <td>${formattedDate}</td>
+                    
+                `;
+
+                tbody.appendChild(row);
+            });
+        }
+    });
+
+
+
+
+</script>

@@ -1,0 +1,148 @@
+<div class="content-page">
+    <div class="container-fluid add-form-list">
+        <div class="row">
+            {{!-- <a href="/users/" class="btn btn-primary"><i class="fa-solid fa-chevron-left"></i> Back to list
+            </a> --}}
+            <div class="col-sm-12">
+                <a href="/users/" class="btn btn-primary"><i class="fa-solid fa-chevron-left"></i> Back to list
+                </a>
+            </div>
+            <div class="col-sm-12 mt-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Create New User Account</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/users/add" method="post" data-toggle="validator" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Full Name *</label>
+                                        <input type="text" class="form-control" placeholder="Enter Name" name="name"
+                                            value="{{name}}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email *</label>
+                                        <input type="email" class="form-control" placeholder="Enter Email" name="email"
+                                            value="{{email}}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" placeholder="Password is automatically generated"
+                                            name="password" value="{{password}}"  readonly> 
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Role *</label>
+                                        <input type="text" class="form-control" placeholder="Sales People" value="User" readonly
+                                            name="role">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Age *</label>
+                                        <input type="int" class="form-control" placeholder="Enter your age" 
+                                            name="age">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Phone Number *</label>
+                                        <input type="number" class="form-control" placeholder="Enter Phone No"
+                                            name="phone" value="{{phone}}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select class="selectpicker form-control" data-style="py-0" name="gender"
+                                            value="{{gender}}">
+                                            <option name="male" value="1" selected>Male</option>
+                                            <option name="female" value="0">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Status *</label>
+                                        <select class="selectpicker form-control" data-style="py-0" name="status" readonly 
+                                            value="{{status}}">
+                                            <option name="active" value="1" disabled>Active</option>
+                                            <option name="inactive" value="0" selected >Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customFile" name="image" required>
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Address *</label>
+                                        <textarea type="text" class="form-control" placeholder="Enter your address"
+                                            name="address" value="{{address}}" required rows="4"></textarea>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox d-inline-block mb-3">
+                                        <input type="checkbox" class="checkbox-input mr-2" id="checkbox1" checked=""
+                                            readonly disabled>
+                                        <label for="checkbox1">Notify User by Email</label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            {{#if success}}
+                            <div class="col-md-12">
+                                <div class="alert alert-success" role="alert">
+                                    <div class="iq-alert-icon">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <div class="iq-alert-text"> <b>Success</b> {{success}}</div>
+                                </div>
+                            </div>
+                            {{/if}}
+
+                            {{#if error}}
+                            <div class="col-md-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <div class="iq-alert-icon">
+                                        <i class="ri-information-line"></i>
+                                    </div>
+                                    <div class="iq-alert-text"> <b>Error</b> {{error}}</div>
+                                </div>
+                            </div>
+
+                            {{/if}}
+                            <button type="submit" class="btn btn-primary mr-2">Create</button>
+                            {{!-- <button type="reset" class="btn btn-danger">Reset</button> --}}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+</div>

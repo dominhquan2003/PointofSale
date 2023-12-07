@@ -1,0 +1,230 @@
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            {{#if success}}
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Success</b> {{success}}</div>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if error}}
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-information-line"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Error</b> {{error}}</div>
+                </div>
+            </div>
+
+            {{/if}}
+            {{#if warning}}
+            <div class="col-md-12">
+                <div class="alert alert-primary" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="iq-alert-text"> <b>Warning </b> {{warning}}</div>
+                </div>
+            </div>
+            {{/if}}
+
+
+            <div class="col-lg-12">
+                <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
+                    <div>
+                        <h4 class="mb-3">Product List</h4>
+                        <p class="mb-0">The product list effectively dictates product presentation and provides
+                            space<br> to list your products and offering in the most appealing way.</p>
+                    </div>
+                    <a href="/products/add" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add
+                        Product</a>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="table-responsive rounded mb-3">
+                    <table  class="table  mb-0 tbl-server-info">
+                        {{#if role}}
+                        <thead class="bg-white text-uppercase">
+                            <tr class="ligth ligth-data">
+
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Barcode</th>
+                                <th>Retail price</th>
+                                <th>Import price</th>
+                                <th>Brand Name</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="ligth-body">
+
+                            {{#each products}}
+                            <tr  id="{{this.id}}">
+                                <td>
+                                    {{sum @index 1}}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="../assets/images/table/product/{{this.image}}"
+                                            class="img-fluid rounded avatar-80" alt="image">
+
+                                    </div>
+                                </td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.barcode}}</td>
+                                <td class="format_price">{{this.retailprice}}</td>
+                                <td class="format_price">{{this.importprice}}</td>
+                                <td>{{this.Category.name}}</td>
+                                <td>{{this.quantity}}</td>
+
+                                <td>
+                                    <div class="d-flex align-items-center list-action">
+                                        {{!-- <a class="badge badge-info mr-2" data-toggle="tooltip"
+                                            data-placement="top" title="" data-original-title="View" href="#"><i
+                                                class="ri-eye-line mr-0"></i></a> --}}
+                                        <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top"
+                                            title="" data-original-title="Edit" href="/products/{{this.id}}"><i
+                                                class="ri-pencil-line mr-0"></i></a>
+                                        <a class="badge bg-warning mr-2 deleteBtn" data-toggle="modal"
+                                            data-placement="top" data-id="{{this.id}}" data-name="{{this.name}}"
+                                            title="" data-original-title="Delete" href="#deleteEmployeeModal"><i
+                                                class="ri-delete-bin-line mr-0"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            {{else}}
+                            <thead class="bg-white text-uppercase">
+                                <tr class="ligth ligth-data">
+
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Barcode</th>
+                                    <th>Retail price</th>
+                                    <th>Import price</th>
+                                    <th>Brand Name</th>
+                                    <th>Quantity</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            {{#each products}}
+                            <tr>
+                                <td>
+                                    {{sum @index 1}}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="../assets/images/table/product/{{this.image}}"
+                                            class="img-fluid rounded avatar-80" alt="image">
+
+                                    </div>
+                                </td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.barcode}}</td>
+                                <td>{{this.retailprice}}</td>
+                                <td>{{this.importprice}}</td>
+                                <td>{{this.Category.name}}</td>
+                                <td>{{this.quantity}}</td>
+
+                                <!-- <td>
+                                    <div class="d-flex align-items-center list-action">
+                                        User cannot access this acction
+                                        {{!-- <a class="badge badge-info mr-2" data-toggle="tooltip"
+                                            data-placement="top" title="" data-original-title="View" href="#"><i
+                                                class="ri-eye-line mr-0"></i></a>
+                                        <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top"
+                                            title="" data-original-title="Edit" href="#"><i
+                                                class="ri-pencil-line mr-0"></i></a> --}}
+                                        {{!-- <a class="badge bg-warning mr-2" data-toggle="tooltip"
+                                            data-placement="top" title="" data-original-title="Delete" href="#"><i
+                                                class="ri-delete-bin-line mr-0"></i></a> --}}
+                                    </div>
+                                </td> -->
+                            </tr>
+                            {{/each}}
+                            {{/if}}
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+</div>
+<div id="deleteEmployeeModal" class="modal fade" aria-hidden="true" data-dismiss="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Employee</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these <strong class="category-name">ABC</strong>
+                    </p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-danger btn-confirm-delete" aria-hidden="true" data-id=""
+                        data-dismiss="modal" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.deleteBtn').click(function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            console.log(name, id)
+            $('.category-name').html(name);
+            $('.btn-confirm-delete').attr('data-id', id);
+
+            $('#deleteEmployeeModal').modal('show');
+        });
+
+        $('.btn-confirm-delete').click(e => {
+            e.preventDefault();
+            let id = e.target.dataset.id;
+            console.log(id)
+            deleteProduct(id);
+            $('#deleteEmployeeModal').modal('hide');
+        })
+        deleteProduct = (id) => {
+            const url = window.location.origin;
+
+            fetch(`${url}/products/delete`, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${encodeURIComponent(id)}`,
+            })
+                .then(res => res.json())
+                .then(json => {
+                    if (json.code === 0) {
+                        console.log("Successful");
+                        $(`tr#${id}`).remove();
+                    } else {
+                        alert(json.message);
+                    }
+                })
+                .catch(e => console.log(e))
+        }
+    });
+</script>

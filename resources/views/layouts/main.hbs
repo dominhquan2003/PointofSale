@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>POS Dash </title>
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/backend-plugin.min.css">
+    <link rel="stylesheet" href="../assets/css/backend.css?v=1.0.0">
+    <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../assets/vendor/remixicon/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+
+<body class="  ">
+    <!-- loader Start -->
+    <div id="loading">
+        <div id="loading-center">
+        </div>
+    </div>
+    <div class="wrapper">
+
+        {{> slidebar }}
+
+        {{> header}}
+
+        {{{body}}}
+    </div>
+
+
+    {{> footer}}
+    <!-- Backend Bundle JavaScript -->
+    <script src="../assets/js/backend-bundle.min.js"></script>
+    <!-- Table Treeview JavaScript -->
+    <script src="../assets/js/table-treeview.js"></script>
+    <!-- Chart Custom JavaScript -->
+    <script src="../assets/js/customizer.js"></script>
+    <!-- Chart Custom JavaScript -->
+    <script async src="../assets/js/chart-custom.js"></script>
+    <!-- app JavaScript -->
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/daterangepicker.js"></script>
+    <script src="../assets/js/report.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function hideElementWithTimeout(element, timeout) {
+                if (element) {
+                    setTimeout(function () {
+                        element.style.transition = "opacity 0.5s";
+                        element.style.opacity = 0;
+
+                        setTimeout(function () {
+                            element.style.display = "none";
+                        }, 500);
+                    }, timeout);
+                }
+            }
+            hideElementWithTimeout(document.querySelector('.alert-success'), 2000);
+            hideElementWithTimeout(document.querySelector('.alert-primary'), 4000);
+            hideElementWithTimeout(document.querySelector('.alert-danger'), 2000);
+            const priceElements = document.querySelectorAll('.format_price');
+            priceElements.forEach(function (element) {
+                const numericValue = parseFloat(element.textContent);
+                if (!isNaN(numericValue)) {
+                    const formattedValue = numericValue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                    element.textContent = formattedValue;
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

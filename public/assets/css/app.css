@@ -1,0 +1,59 @@
+#informationOrderdetailModal .modal-dialog {
+      max-width: 80%;
+      position: relative;
+}
+
+#informationOrderdetailModal .modal-content {
+      width: 100%;
+      min-height: 100px;
+
+}
+
+#informationOrderdetailModal .table-responsive-sm {
+      max-height: 400px;
+      overflow-y: scroll;
+}
+
+
+#informationOrderdetailModal_Report .modal-dialog {
+      max-width: 80%;
+      position: relative;
+}
+
+#informationOrderdetailModal_Report .modal-content {
+      width: 100%;
+      min-height: 100px;
+
+}
+
+#informationOrderdetailModal_Report .table-responsive-sm {
+      max-height: 400px;
+      overflow-y: scroll;
+}
+.custom-close-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      margin: -20px -20px 0 0;
+      z-index: 9999;
+}
+
+
+
+
+#informationOrderModal .modal-dialog {
+      max-width: 80%;
+      position: relative;
+}
+
+#informationOrderModal .modal-content {
+      width: 100%;
+      min-height: 100px;
+
+}
+
+#informationOrderModal .table-responsive-sm {
+      max-height: 400px;
+      overflow-y: scroll;
+}
