@@ -60,6 +60,9 @@ function getCustomer(phoneInput) {
                         $('#address_customer').val(response.customer.address);
                   } else {
                         $('#phone_customer').val(response.phone);
+                        $('#paymentErrorMessage').text(response.message);
+
+                        
                   }
             })
             .catch(error => {

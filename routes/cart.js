@@ -8,9 +8,9 @@ router.get('/saleInterface',checkLogin, cartController.index);
 router.get('/getCart',checkLogin, cartController.getCartOnload);
 router.get('/remove_item',checkLogin, cartController.removeCart);
 router.get('/cartCustomerInfor',checkLogin, cartController.cartCustomerInfor);
+
 router.get('/historyPurchase',checkLogin, OrderController.historyPurchase);
 router.get('/getOrderdetails',checkLogin, OrderController.getOrderdetails);
-
 
 
 
