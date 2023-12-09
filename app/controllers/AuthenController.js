@@ -132,15 +132,14 @@ class AuthenController {
             }
       }
       async recoverPost(req, res, next) {
-            const { email, password } = req.body
-            const username = email.split('@')[0];
+            const { username, password } = req.body
             let resultvalidation = validationResult(req);
             if (resultvalidation.errors.length === 0) {
                   if (username === password) {
                         req.flash('warning', 'Cannot set default password for new password');
                         return res.redirect('/authen/recover');
                   } else {
-                        const account = await Account.findOne({ where: { email: email } });
+                        const account = await Account.findOne({ where: { username} });
                         if (account) {
                               const user = await User.findOne({ where: { accountId: account.id } });
                               if (password === account.password) {

@@ -42,9 +42,9 @@
                                     <div class="row">
                                        <div class="col-lg-12">
                                           <div class="floating-label form-group">
-                                             <input class="floating-input form-control" type="email" placeholder=" "
-                                                name="email">
-                                             <label>Email</label>
+                                             <input class="floating-input form-control" type="text" placeholder=" "
+                                                name="username">
+                                             <label>Username</label>
                                           </div>
                                           <div class="floating-label form-group">
                                              <input class="floating-input form-control" type="password" placeholder=" "
@@ -60,7 +60,7 @@
                                           <div class="iq-alert-icon">
                                              <i class="fa-solid fa-triangle-exclamation"></i>
                                           </div>
-                                          <div class="iq-alert-text"> <b>Warning </b> {{warning}}</div>
+                                          <div class="iq-alert-text">   {{warning}}</div>
                                        </div>
                                     </div>
                                     {{/if}}
@@ -103,17 +103,23 @@
    <script src="../assets/js/app.js"></script>
    <script>
       document.addEventListener('DOMContentLoaded', function () {
-         // Fade out success alert after 3 seconds
-         var successAlert = document.querySelector('.alert-primary');
-         if (successAlert) {
-            setTimeout(function () {
-               successAlert.style.transition = "opacity 0.5s";
-               successAlert.style.opacity = 0;
-            }, 2000);
-         }
+            function hideElementWithTimeout(element, timeout) {
+                if (element) {
+                    setTimeout(function () {
+                        element.style.transition = "opacity 0.5s";
+                        element.style.opacity = 0;
 
-
-      });
+                        setTimeout(function () {
+                            element.style.display = "none";
+                        }, 500);
+                    }, timeout);
+                }
+            }
+            hideElementWithTimeout(document.querySelector('.alert-success'), 2000);
+            hideElementWithTimeout(document.querySelector('.alert-primary'), 4000);
+            hideElementWithTimeout(document.querySelector('.alert-danger'), 2000);
+           
+        });
    </script>
 </body>
 

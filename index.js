@@ -47,7 +47,7 @@ app.engine(
       sum: (a, b) => a + b,
       multiply : (a, b) => a * b,
       eq: function (a, b) {
-        return a === b;
+        return a == b;
       },
     },
   })

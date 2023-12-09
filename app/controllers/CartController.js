@@ -191,7 +191,9 @@ class CartController {
                                     quantity: cart[item].quantity,
                                     price: cart[item].product_price
                               }, { transaction })
-
+                              const product = await Product.findByPk(cart[item].product_id)
+                              product.quantity = product.quantity -  cart[item].quantity
+                              await product.save({ transaction });
                         }
                         await transaction.commit();
                         req.session.order = order ; 
@@ -216,6 +218,10 @@ class CartController {
                                     quantity: cart[item].quantity,
                                     price: cart[item].product_price
                               }, { transaction })
+
+                              const product = await Product.findByPk(cart[item].product_id)
+                              product.quantity = product.quantity -  cart[item].quantity
+                              await product.save({ transaction });
 
                         }
                         await transaction.commit();

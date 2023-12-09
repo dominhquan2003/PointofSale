@@ -127,7 +127,7 @@ function updateCartUI(cart) {
                     </td>
                     <td >
                         <input id="quantity_product_card" type="number" data-id="${item.product_id}"
-                            class="form-control quantity-input text-center" min="0"
+                            class="form-control quantity-input text-center" min="1"
                             max="${item.maxquantity}" value="${item.quantity}"
                             onchange="updateTotalPrice(this)"
                             onkeydown="updateTotalPrice(this)">
@@ -152,7 +152,7 @@ function updateCartUI(cart) {
             const checkoutRow = document.createElement('tr');
             checkoutRow.innerHTML = `
             <td colspan="5" align="right">      
-                  <button href="#enterCustomerModal"  style="width: 100%;" class="btn btn-primary" id="btn-enter-checkout"   
+                  <button href="#enterCustomerModal"  style="width: 100%;" class="btn btn-success" id="btn-enter-checkout"   
                   data-toggle="modal" data-placement="top"
                   >Check out</button>
             </td>

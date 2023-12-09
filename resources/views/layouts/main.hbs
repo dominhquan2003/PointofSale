@@ -68,14 +68,10 @@
             hideElementWithTimeout(document.querySelector('.alert-success'), 2000);
             hideElementWithTimeout(document.querySelector('.alert-primary'), 4000);
             hideElementWithTimeout(document.querySelector('.alert-danger'), 2000);
-            const priceElements = document.querySelectorAll('.format_price');
-            priceElements.forEach(function (element) {
-                const numericValue = parseFloat(element.textContent);
-                if (!isNaN(numericValue)) {
-                    const formattedValue = numericValue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-                    element.textContent = formattedValue;
-                }
-            });
+           
+            
+
+            
         });
 
     </script>
