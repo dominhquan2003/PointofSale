@@ -382,6 +382,16 @@
     </div>
 </div> --}}
 <div class="content-page">
+     {{#if warning}}
+    <div class="col-md-12">
+        <div class="alert alert-primary" role="alert">
+            <div class="iq-alert-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="iq-alert-text"> <b>Warning </b> {{warning}}</div>
+        </div>
+    </div>
+    {{/if}}
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
