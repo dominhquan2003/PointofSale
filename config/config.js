@@ -16,10 +16,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "pos",
-    "host": "127.0.0.1",
+    "username": process.env.DB_PRODUCTION_NAME,
+    "password": process.env.DB_PRODUCTION_USERNAME,
+    "database": process.env.DB_PRODUCTION_PASSWORD,
+    "host": process.env.DB_PRODUCTION_HOST,
     "dialect": "mysql"
   }
 };
