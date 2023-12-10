@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2023 at 03:25 PM
+-- Generation Time: Dec 10, 2023 at 08:34 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `pos`
 --
+CREATE DATABASE IF NOT EXISTS `pos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `pos`;
 
 -- --------------------------------------------------------
 
@@ -40,7 +42,7 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`id`, `email`, `password`, `username`) VALUES
 (1, 'admin@gmail.com', '$2b$10$i2v6nU.HQo8Nxidm4sQNKOVFWSKXgRFncYN1JMaTFa57lnfg0CCEC', 'admin'),
-(2, 'doquan23032003@gmail.com', '$2b$10$8jFI3yzLjB6ZDOT3wCOH/.YzLp4SqsQnnbEOQdcdISc.RybMgWE4u', 'doquan23032003'),
+(2, 'doquan23032003@gmail.com', '$2b$10$6zQn2hAQPTatskk/1hMUNOlyUW0WcGTBxd6ZB4RooMujDM7uZWlLK', 'doquan23032003'),
 (3, 'femedo5683@dabeixin.com', '$2b$10$gPnGX8liAqeegv.6GbaDQ.FuXs8M/jlRqzHsqJ6/4xtFy/VWG7I8y', 'femedo5683'),
 (4, 'nalim97965@dabeixin.com', '$2b$10$C5mh1AVQV/gAOjVBCQ1coezTP2Y.k10/7Hw/IbxZsctZuvKG5uQ2i', 'nalim97965'),
 (5, 'rodade8955@bikedid.com', '$2b$10$ap.LoHPPoWi9BedTtgsZSuRudy63ASPM/N611EQgXzlZ1a4HOL.WG', 'rodade8955'),
@@ -106,7 +108,9 @@ INSERT INTO `customer` (`id`, `name`, `phone`, `address`) VALUES
 (13, 'Do Huu Tri', '0908402245', '78 New York City'),
 (14, 'Chau Que Nhu ', '0374121240', '61 Phu Dong Thien Vuong p11 q5'),
 (15, 'Do Minh Nguyen', '0941787787', '23 A Riverside thu thiem'),
-(16, 'Do Minh Nguyen', '0913564127', '21A Bui Minh Truc P11 Quan 9 ');
+(16, 'Do Minh Nguyen', '0913564127', '21A Bui Minh Truc P11 Quan 9 '),
+(17, 'Chau Nhuan Trúng', '0374121241', '67 Phu Dong Thiên Vương phường 15 quận 1'),
+(18, 'Nguyễn Vĩnh Khang ', '09135467815', '49 Đông Hồ Phường 15 Q8');
 
 -- --------------------------------------------------------
 
@@ -145,7 +149,10 @@ INSERT INTO `order` (`id`, `totalprice`, `payment`, `refund`, `createdAt`, `stat
 (13, 41000000, 41000000, 0, '2023-12-07 21:19:21', 1, 3, 1),
 (14, 13100000, 14000000, 900000, '2023-12-07 21:19:46', 1, 4, 1),
 (15, 53000000, 53000000, 0, '2023-12-07 21:20:38', 1, 11, 3),
-(16, 28700000, 29000000, 300000, '2023-12-07 21:21:19', 1, 14, 7);
+(16, 28700000, 29000000, 300000, '2023-12-07 21:21:19', 1, 14, 7),
+(17, 380000000, 380000000, 0, '2023-12-09 11:51:44', 1, 17, 2),
+(18, 23000000, 23000000, 0, '2023-12-09 11:59:15', 1, 1, 2),
+(19, 44000000, 44000000, 0, '2023-12-09 12:29:16', 1, 18, 2);
 
 -- --------------------------------------------------------
 
@@ -170,8 +177,6 @@ INSERT INTO `orderdetail` (`id`, `orderid`, `productid`, `quantity`, `price`) VA
 (2, 1, 2, 2, 17000000),
 (3, 2, 12, 1, 18000000),
 (4, 2, 11, 1, 13400000),
-(5, 3, 40, 1, 11700000),
-(6, 3, 39, 1, 380000000),
 (7, 3, 28, 1, 20000000),
 (8, 4, 22, 1, 1500000),
 (9, 4, 26, 3, 3000000),
@@ -194,7 +199,10 @@ INSERT INTO `orderdetail` (`id`, `orderid`, `productid`, `quantity`, `price`) VA
 (26, 14, 35, 1, 13100000),
 (27, 15, 14, 1, 28000000),
 (28, 15, 25, 1, 25000000),
-(29, 16, 19, 1, 28700000);
+(29, 16, 19, 1, 28700000),
+(31, 18, 4, 1, 12000000),
+(32, 18, 3, 1, 11000000),
+(33, 19, 3, 4, 11000000);
 
 -- --------------------------------------------------------
 
@@ -219,13 +227,13 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `importprice`, `retailprice`, `quantity`, `barcode`, `image`, `categoryid`, `createdAt`) VALUES
-(1, 'Asus rog 7 Entry Black', 14000000, 16000000, 25, '1234567890123', 'rog7-entry-black-01-light.png', 2, '2023-12-06'),
-(2, 'Asus rog 7', 15000000, 17000000, 25, '9876543210987', 'asus-rog-7.jpg', 2, '2023-12-06'),
-(3, 'Vivo x80 blue', 9000000, 11000000, 40, '5678901234567', 'vivo-x80-xanh.jpg', 3, '2023-12-06'),
-(4, 'Vivo y15 blue black', 8000000, 12000000, 40, '4321098765431', 'Vivo-y15s-2021-xanh-den.jpg', 3, '2023-12-06'),
-(5, 'Vivo v25 yellow', 85000000, 11000000, 40, '8765432109876', 'vivo-v25e-vang-dd.jpg', 3, '2023-12-06'),
-(6, 'Vivo v2111', 97000000, 12500000, 40, '2109876543210', 'vivo-v2111.jpg', 3, '2023-12-06'),
-(7, 'Vivo v27', 91000000, 12000000, 40, '6543210987658', 'vivo-v27.jpg', 3, '2023-12-06'),
+(1, 'Asus rog 7 Entry Black', 14000000, 16000000, 12, '1234567890123', 'rog7-entry-black-01-light.png', 2, '2023-12-06'),
+(2, 'Asus rog 7', 15000000, 17000000, 0, '9876543210987', 'asus-rog-7.jpg', 2, '2023-12-06'),
+(3, 'Vivo x80 blue', 9000000, 11000000, 4, '5678901234567', 'vivo-x80-xanh.jpg', 3, '2023-12-06'),
+(4, 'Vivo y15 blue black', 8000000, 12000000, 6, '4321098765431', 'Vivo-y15s-2021-xanh-den.jpg', 3, '2023-12-06'),
+(5, 'Vivo v25 yellow', 85000000, 11000000, 4, '8765432109876', 'vivo-v25e-vang-dd.jpg', 3, '2023-12-06'),
+(6, 'Vivo v2111', 97000000, 12500000, 10, '2109876543210', 'vivo-v2111.jpg', 3, '2023-12-06'),
+(7, 'Vivo v27', 91000000, 12000000, 12, '6543210987658', 'vivo-v27.jpg', 3, '2023-12-06'),
 (8, 'Oppo Pro Black', 78000000, 9700000, 35, '0987654321098', 'oppo-find-x5-pro-den.jpg', 4, '2023-12-06'),
 (9, 'Oppo A58', 10000000, 13500000, 35, '3210987654322', 'oppo-a58.jpg', 4, '2023-12-06'),
 (10, 'Oppo Reno 10 Pro', 11000000, 13200000, 35, '7654321098765', 'oppo-reno-10pro.jpg', 4, '2023-12-06'),
@@ -234,7 +242,7 @@ INSERT INTO `product` (`id`, `name`, `importprice`, `retailprice`, `quantity`, `
 (13, 'Huawei nova', 13000000, 15700000, 30, '0123456789012', 'huawei-nova.jpg', 1, '2023-12-06'),
 (14, 'Iphone 14 plus blue', 19000000, 28000000, 20, '4567890123456', '14_plus_xanh.png', 5, '2023-12-06'),
 (15, 'Iphone 14 promax black', 32000000, 38000000, 20, '8901234567890', 'iphone-14-pro-max-den.jpg', 5, '2023-12-06'),
-(16, 'iPhone 15 promax titan', 30000000, 38000000, 20, '5432109876543', 'iphone15.jpg', 5, '2023-12-06'),
+(16, 'iPhone 15 promax titan', 30000000, 38000000, 2, '5432109876543', 'iphone15.jpg', 5, '2023-12-06'),
 (17, 'iPhone 11 Pro', 12500000, 18000000, 20, '9876543210988', 'iphone11-pro.jpg', 5, '2023-12-06'),
 (18, 'iPhone 13', 18000000, 24000000, 20, '8765432109877', 'iphone-13.jpg', 5, '2023-12-06'),
 (19, 'Iphone13 mini pink', 21100000, 28700000, 20, '7654321098767', 'iphone-13-mini-pink.jpg', 5, '2023-12-06'),
@@ -248,17 +256,14 @@ INSERT INTO `product` (`id`, `name`, `importprice`, `retailprice`, `quantity`, `
 (27, 'Samsung galaxy-z-flip-4', 12800000, 22000000, 30, '8765432109878', 'samsung-galaxy-z-flip-4.jpg', 6, '2023-12-06'),
 (28, 'Galaxy S22 Ultra Burgundy', 16000000, 20000000, 30, '7654321098761', 'Galaxy-S22-Ultra-Burgundy.jpg', 6, '2023-12-06'),
 (29, 'Galaxy-S22 Black', 16000000, 21000000, 30, '268946642879', 'Galaxy-S22-Black.jpg', 6, '2023-12-06'),
-(30, 'Galaxy S22 Plus', 16000000, 21200000, 50, '216231102625', 'galaxy-s22-plus-white.jpg', 6, '2023-12-06'),
+(30, 'Galaxy S22 Plus', 16000000, 21200000, 0, '216231102625', 'galaxy-s22-plus-white.jpg', 6, '2023-12-06'),
 (31, 'Xiaomi-11T White', 10000000, 12000000, 30, '691871033066', 'Xiaomi-11T-White.jpg', 7, '2023-12-06'),
-(32, 'Redmi Note-11 Twilight Blue', 14000000, 16000000, 30, '482950888081', 'Redmi-Note-11-Twilight-Blue-2.jpg', 7, '2023-12-06'),
+(32, 'Redmi Note-11 Twilight Blue', 14000000, 16000000, 0, '482950888081', 'Redmi-Note-11-Twilight-Blue-2.jpg', 7, '2023-12-06'),
 (33, 'Xiaomi redmi 10', 11000000, 13000000, 30, '418214515631', 'Xiaomi-11T-White.jpg', 7, '2023-12-06'),
 (34, 'Redmi note 12', 9000000, 13000000, 30, '361831223625', 'redmi-note12.jpg', 7, '2023-12-06'),
 (35, 'Xiaomi 13 lite 2', 10000000, 13100000, 30, '119461197940', 'xiaomi-13-lite-2.jpg', 7, '2023-12-06'),
 (36, 'Xiaomi 13C', 11000000, 13000000, 30, '163264563304', 'xiaomi-13C.jpg', 7, '2023-12-06'),
-(37, 'Oppo A95', 9000000, 12500000, 35, '356911113486', 'oppo-a95.jpg', 4, '2023-12-06'),
-(38, 'Oppo Reno 8', 8000000, 11700000, 35, '746922231110', 'oppo-reno8.jpg', 4, '2023-12-06'),
-(39, 'IPhone 15 plus titan', 30000000, 380000000, 20, '449555109951', 'Apple-iPhone-15.jpg', 5, '2023-12-06'),
-(40, 'Oppo A78', 8000000, 11700000, 35, '315421892619', 'oppo-a78.jpg', 4, '2023-12-06');
+(37, 'Oppo A95', 9000000, 12500000, 35, '356911113486', 'oppo-a95.jpg', 4, '2023-12-06');
 
 -- --------------------------------------------------------
 
@@ -366,25 +371,25 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `user`
