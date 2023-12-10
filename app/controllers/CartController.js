@@ -8,13 +8,13 @@ class CartController {
             const error = req.flash('error');
             const cart = req.session.cart;
             const orderAndCustomer = await Order.findAll({
-                        include: [{
-                              model: Customer,
-                              where: {
-                                    customerId: sequelize.col('Order.customerId'), 
-                              },
-                        }],
-                  }) || '' ;
+                  include: [{
+                        model: Customer,
+                        where: {
+                              customerId: sequelize.col('Order.customerId'),
+                        },
+                  }],
+            }) || '';
 
             if (!cart) {
                   req.session.cart = [];
@@ -22,10 +22,10 @@ class CartController {
 
             if (cart && cart.length > 0) {
                   const cartlength = cart.length;
-                  res.render('cart/cart', { products, customers : orderAndCustomer,  cart: req.session.cart, cartlength, error, layout: false });
+                  res.render('cart/cart', { products, customers: orderAndCustomer, cart: req.session.cart, cartlength, error, layout: false });
             } else {
                   const cartEmpty = "No Item Found in Cart";
-                  res.render('cart/cart', { products, customers : orderAndCustomer,  cart: req.session.cart, cartEmpty, error, layout: false });
+                  res.render('cart/cart', { products, customers: orderAndCustomer, cart: req.session.cart, cartEmpty, error, layout: false });
             }
       }
       getCartOnload(req, res, next) {
@@ -89,16 +89,21 @@ class CartController {
 
                         existingProduct.quantity += 1;
                   } else {
-                        const cart_data = {
-                              product_id: matchingProduct.id,
-                              product_image: matchingProduct.image,
-                              product_name: matchingProduct.name,
-                              product_price: matchingProduct.retailprice,
-                              quantity: 1,
-                              maxquantity: matchingProduct.quantity
-                        };
-                        console.log(cart_data);
-                        req.session.cart.push(cart_data);
+
+                        if (matchingProduct.quantity == 0) {
+                              req.flash('error', 'this product was out of stock');
+                              return res.redirect("/cart/saleInterface");
+                        } else {
+                              const cart_data = {
+                                    product_id: matchingProduct.id,
+                                    product_image: matchingProduct.image,
+                                    product_name: matchingProduct.name,
+                                    product_price: matchingProduct.retailprice,
+                                    quantity: 1,
+                                    maxquantity: matchingProduct.quantity
+                              };
+                              req.session.cart.push(cart_data);
+                        }
                   }
 
                   res.redirect("/cart/saleInterface");
@@ -192,14 +197,14 @@ class CartController {
                                     price: cart[item].product_price
                               }, { transaction })
                               const product = await Product.findByPk(cart[item].product_id)
-                              product.quantity = product.quantity -  cart[item].quantity
+                              product.quantity = product.quantity - cart[item].quantity
                               await product.save({ transaction });
                         }
                         await transaction.commit();
-                        req.session.order = order ; 
+                        req.session.order = order;
                         req.session.cart = [];
                         return res.redirect('/invoice/print');
-                  }  else {
+                  } else {
 
                         const order = await Order.create(
                               {
@@ -220,12 +225,12 @@ class CartController {
                               }, { transaction })
 
                               const product = await Product.findByPk(cart[item].product_id)
-                              product.quantity = product.quantity -  cart[item].quantity
+                              product.quantity = product.quantity - cart[item].quantity
                               await product.save({ transaction });
 
                         }
                         await transaction.commit();
-                        req.session.order = order ; 
+                        req.session.order = order;
                         req.session.cart = [];
                         return res.redirect('/invoice/print');
                   }
