@@ -11,9 +11,9 @@ $(document).ready(function () {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                timeZone: 'UTC'
+                timeZone: 'Asia/Ho_Chi_Minh'
             };
-            dateElement.textContent = new Intl.DateTimeFormat('en-US', options).format(date);
+            dateElement.textContent = new Intl.DateTimeFormat('vi-VN', options).format(date);
         }
       $('.btn-personal-information').on('click', function () {
             const customerId = $(this).data('id');

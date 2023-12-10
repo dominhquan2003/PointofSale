@@ -37,10 +37,10 @@ class OrderController {
             try {
                   const { startDate, endDate } = req.query;
 
-                  const startDateFormat = moment.utc(`${startDate} 00:00:00`).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss');
-                  const endDateFormat = moment.utc(`${endDate} 23:59:59`).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss');
-
-
+                  const startDateFormat = moment(`${startDate} 00:00:00`).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss');
+                  const endDateFormat = moment(`${endDate} 23:59:59`).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss');
+                  console.log(startDateFormat)
+                  console.log(endDateFormat)
                   if (!startDateFormat) {
                         res.json({
                               code: 404,
