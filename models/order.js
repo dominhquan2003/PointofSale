@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Order',
-    tableName: 'Order', // Set the table name to match your schema
+    tableName: 'order', // Set the table name to match your schema
     updatedAt: false,
   });
   return Order;
