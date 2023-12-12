@@ -86,7 +86,9 @@ INSERT INTO product (name, importprice, retailprice, quantity, barcode, image, c
 VALUES
     ('Iphone 14 plus blue', 19000000,28000000, 20, '4567890123456', '14_plus_xanh.png', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('Iphone 14 promax black', 32000000,38000000, 20, '8901234567890', 'iphone-14-pro-max-den.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
-    ('iPhone 15 promax titan', 30000000,38000000, 20, '5432109876543', 'iphone15.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
+    ('Iphone 15 promax blue', 32000000,38000000, 20, '8901234273462', '15promaxblue.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
+    ('Iphone 15 plus', 32000000,38000000, 20, '8423742684238', 'iphone15plus.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
+    ('Iphone 15 promax black', 32000000,38000000, 20, '8901234567890', 'iphone15promax.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('iPhone 11 Pro', 12500000,18000000, 20, '9876543210988', 'iphone11-pro.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('iPhone 13', 18000000,24000000, 20, '8765432109877', 'iphone-13.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('Iphone13 mini pink', 21100000,28700000, 20, '7654321098767', 'iphone-13-mini-pink.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
@@ -108,7 +110,6 @@ VALUES
     ('Case iphone14', 1000000,  1500000, 20, '4321098765432', 'case_iphone14.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('Samsung galaxy-z-flip 3 cream', 17000000,24400000, 30, '3210987654321', 'samsung-galaxy-z-flip-3-cream.jpg', (SELECT id FROM category WHERE name = 'Samsung'), NOW()),
     ('Samsung-galaxy a03', 7000000,8000000, 30, '2109876543211', 'samsung-galaxy-a03-xanh.jpg', (SELECT id FROM category WHERE name = 'Samsung'), NOW()),
-    ('Samsung Galazy-Z-Fold-5 ', 22000000,25000000, 30, '1098765432109', 'Samsung-Galazy-Z-Fold-5.jpg', (SELECT id FROM category WHERE name = 'Samsung'), NOW()),
     ('Buds pro ', 2000000,3000000, 30, '9876543210989', 'buds-pro_1.jpg', (SELECT id FROM category WHERE name = 'Samsung'), NOW()),
     ('Samsung galaxy-z-flip-4', 12800000,22000000, 30, '8765432109878', 'samsung-galaxy-z-flip-4.jpg', (SELECT id FROM category WHERE name = 'Samsung'), NOW()),
     ('Galaxy S22 Ultra Burgundy', 16000000,20000000, 30, '7654321098761', 'Galaxy-S22-Ultra-Burgundy.jpg', (SELECT id FROM category WHERE name = 'Samsung'), NOW()),
@@ -118,7 +119,6 @@ VALUES
     ('Redmi Note-11 Twilight Blue', 14000000,16000000, 30, '482950888081', 'Redmi-Note-11-Twilight-Blue-2.jpg', (SELECT id FROM category WHERE name = 'Xiaomi'), NOW()),
     ('Xiaomi redmi 10', 11000000,13000000, 30, '418214515631', 'Xiaomi-11T-White.jpg', (SELECT id FROM category WHERE name = 'Xiaomi'), NOW()),
     ('Redmi note 12', 9000000,13000000, 30, '361831223625', 'redmi-note12.jpg', (SELECT id FROM category WHERE name = 'Xiaomi'), NOW()),
-    ('Xiaomi 13 lite 2', 10000000,13100000, 30, '119461197940', 'xiaomi-13-lite-2.jpg', (SELECT id FROM category WHERE name = 'Xiaomi'), NOW()),
     ('Xiaomi 13C', 11000000,13000000, 30, '163264563304', 'xiaomi-13C.jpg', (SELECT id FROM category WHERE name = 'Xiaomi'), NOW()),
     ('Oppo A95', 9000000,12500000, 35, '356911113486', 'oppo-a95.jpg', (SELECT id FROM category WHERE name = 'Oppo'), NOW()),
 

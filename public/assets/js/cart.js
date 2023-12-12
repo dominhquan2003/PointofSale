@@ -151,8 +151,8 @@ function updateCartUI(cart) {
             cartTableBody.appendChild(totalRow);
             const checkoutRow = document.createElement('tr');
             checkoutRow.innerHTML = `
-            <td colspan="5" align="right">      
-                  <button href="#enterCustomerModal"  style="width: 100%;" class="btn btn-success" id="btn-enter-checkout"   
+            <td colspan="4" align="center">      
+                  <button href="#enterCustomerModal"  style="width: 80%;" class="btn btn-info" id="btn-enter-checkout"   
                   data-toggle="modal" data-placement="top"
                   >Check out</button>
             </td>

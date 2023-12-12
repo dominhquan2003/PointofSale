@@ -12,6 +12,7 @@
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Create New User Account</h4>
+                            <small style="color: red;">Password will automatically generated</small>
                         </div>
                     </div>
                     <div class="card-body">
@@ -33,7 +34,7 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" hidden>
                                     <div class="form-group">
                                         <label>Password</label>
                                         <input type="password" class="form-control" placeholder="Password is automatically generated"
@@ -41,7 +42,7 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" hidden>
                                     <div class="form-group">
                                         <label>Role *</label>
                                         <input type="text" class="form-control" placeholder="Sales People" value="User" readonly
@@ -78,7 +79,7 @@
                                 </div>
 
                                 
-                                <div class="col-md-4">
+                                <div class="col-md-4" hidden>
                                     <div class="form-group">
                                         <label>Status *</label>
                                         <select class="selectpicker form-control" data-style="py-0" name="status" readonly 
