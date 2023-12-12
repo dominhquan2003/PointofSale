@@ -7,25 +7,16 @@ class CartController {
             const products = await Product.findAll();
             const error = req.flash('error');
             const cart = req.session.cart;
-            const orderAndCustomer = await Order.findAll({
-                  include: [{
-                        model: Customer,
-                        where: {
-                              customerId: sequelize.col('Order.customerId'),
-                        },
-                  }],
-            }) || '';
-
             if (!cart) {
                   req.session.cart = [];
             }
 
             if (cart && cart.length > 0) {
                   const cartlength = cart.length;
-                  res.render('cart/cart', { products, customers: orderAndCustomer, cart: req.session.cart, cartlength, error, layout: false });
+                  res.render('cart/cart', { products, cart: req.session.cart, cartlength, error, layout: false });
             } else {
                   const cartEmpty = "No Item Found in Cart";
-                  res.render('cart/cart', { products, customers: orderAndCustomer, cart: req.session.cart, cartEmpty, error, layout: false });
+                  res.render('cart/cart', { products, cart: req.session.cart, cartEmpty, error, layout: false });
             }
       }
       getCartOnload(req, res, next) {
@@ -139,7 +130,7 @@ class CartController {
                   return res.json({
                         code: 1,
                         phone,
-                        message: 'This is a new customer'
+                        message: 'This phone is not existed'
 
                   })
             }

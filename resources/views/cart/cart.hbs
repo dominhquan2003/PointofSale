@@ -38,7 +38,7 @@
             background-color: #fff;
 
         }
-        
+
 
         @keyframes bounce {
 
@@ -135,7 +135,7 @@
                                                             style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">
                                                             {{this.name}}
                                                         </h5>
-                                                        <div >
+                                                        <div>
                                                             <p class="card-text">
                                                                 {{this.retailprice}} <sp>VND</sp>
                                                             </p>
@@ -145,7 +145,7 @@
                                                         </div>
 
                                                         <form>
-                                                            {{#if  this.quantity  }}
+                                                            {{#if this.quantity }}
                                                             <input type="submit" data-id="{{this.id}}"
                                                                 class="btn-addCart btn btn-primary"
                                                                 value="Add to Cart" />
@@ -244,10 +244,11 @@
                                                             <!-- <button type="button"
                                                                 class="btn btn-primary btn-enter-customer"
                                                                 id="btn-enter-customer">Confirm</button> -->
-                                                            <form action="/cart/cartCustomerInfro">
-                                                                <button type="button" id="checkCustomer"
-                                                                    class="btn btn-primary">Check</button>
-                                                            </form>
+                                                            {{!-- <form action="/cart/cartCustomerInfro"> --}}
+                                                                <button type="button" id="moveToHistory"
+                                                                    class="btn btn-primary">History Purchase</button>
+                                                                {{!--
+                                                            </form> --}}
 
                                                             <button type="button" id="confirmation-information"
                                                                 class="btn btn-success">Confirm</button>
@@ -263,7 +264,8 @@
 
                                     <div class="card">
                                         <div class="card-header">
-                                                <h1 class="card-title text-info" style="width: 20%; margin: auto;"> CART </h1>
+                                            <h1 class="card-title text-info" style="width: 20%; margin: auto;"> CART
+                                            </h1>
                                         </div>
                                         <div class="card-body pl-5">
                                             <div class="table-responsive">
@@ -308,26 +310,56 @@
                         <!-- view History Purchase -->
                         <div class="tab-pane fade " id="customer-information" role="tabpanel">
                             <div class="row">
-
+                                
                                 <div class="card col-sm-12 col-lg-12 col-md-12">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="iq-header-title">
                                             <h4 class="card-title">History Purchase</h4>
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    
+                                    <div class="card-body row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="control-label col-sm-3 align-self-center">Phone:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="phone_customer_purchased"
+                                                        name="phone_customer_purchased" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label
+                                                    class="control-label col-sm-3 align-self-center">Name:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="name_customer_purchased"
+                                                        name="name_customer_purchased">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label
+                                                    class="control-label col-sm-3 align-self-center">Address:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="address" class="form-control"
+                                                        id="address_customer_purchased" name="address_customer_purchased">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <p style="color: red;" id="historyErrorMessage">
 
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                </p>
+                                            </div>
+                                            
+                                            
+
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
                                             <div class="table-responsive rounded mb-3">
-                                                <table id="datatable" class="data-tables table mb-0 tbl-server-info">
+                                                <table  class=" table mb-0 tbl-server-info">
                                                     <thead class="bg-white text-uppercase">
                                                         <tr class="ligth ligth-data">
                                                             <th># Index</th>
-                                                            <!-- <th>Customer ID</th> -->
                                                             <th>Trans-No </th>
-                                                            <th>Name</th>
-                                                            {{!-- <th>Phone</th>
-                                                            <th>Address</th> --}}
                                                             <th>Total Amount</th>
                                                             <th>Cash</th>
                                                             <th>Refund</th>
@@ -335,15 +367,14 @@
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="ligth-body ">
-                                                        {{#each customers}}
+                                                    <tbody id="bodyHistoryPurchaseCustomer" class="ligth-body ">
+                                                        <!-- {{#each customers}}
                                                         <tr>
                                                             <td>{{sum @index 1}}</td>
                                                             <td hidden>{{this.Customer.id}}</td>
                                                             <td>{{this.id}}</td>
                                                             <td>{{this.Customer.name}}</td>
-                                                            <td hidden>{{this.Customer.phone}}</td>
-                                                            <td hidden>{{this.Customer.address}}</td>
+                                                            
                                                             <td>{{this.totalprice}}</td>
                                                             <td>{{this.payment}}</td>
                                                             <td>{{this.refund}}</td>
@@ -372,7 +403,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        {{/each}}
+                                                        {{/each}} -->
                                                     </tbody>
                                                 </table>
                                             </div>

@@ -5,4 +5,5 @@ const checkLogin = require('../authentication/checkToken');
 
 router.get('/', homeController.index);
 
+
 module.exports = router;

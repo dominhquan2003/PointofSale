@@ -1,3 +1,5 @@
+
+
 const errorAlert = document.querySelector('.alert-danger');
 if (errorAlert) {
       setTimeout(function () {
@@ -38,10 +40,166 @@ $(document).ready(function () {
                   return;
             }
             $('#checkForm').submit();
+
+
       });
-      
+
+      // Use event delegation on a static parent element (in this case, the table with id 'bodyHistoryPurchaseCustomer')
+      $('#bodyHistoryPurchaseCustomer').on('click', '.btn-orderdetail-information', function () {
+            const id = $(this).data('id');
+            console.log(id);
+            $('#informationOrderdetailModal').modal('show');
+            getOrderdetails(id);
+      });
+
+      const dateElements = document.querySelectorAll('.dateOfPurchase');
+      dateElements.forEach(formatDate);
+      function formatDate(dateElement) {
+            const dateString = dateElement.textContent;
+            const date = new Date(dateString);
+            const options = {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  timeZone: 'Asia/Ho_Chi_Minh'
+            };
+            dateElement.textContent = new Intl.DateTimeFormat('vi-VN', options).format(date);
+      }
+
+
 });
 
+$('#phone_customer_purchased').on('change', function () {
+      const phoneInput = $(this).val();
+      getCustomerPurchaseHistory(phoneInput);
+      getHistoryPurchased(phoneInput)
+});
+$('#phone_customer_purchased').on('keydown', function () {
+      setTimeout(() => {
+            const phoneInput = $(this).val();
+            getCustomerPurchaseHistory(phoneInput);
+            getHistoryPurchased(phoneInput)
+      }, 0);
+});
+
+function getCustomerPurchaseHistory(phoneInput) {
+      const url = window.location.origin;
+      fetch(`${url}/cart/cartCustomerInfor?phone=${phoneInput}`, {
+            method: 'GET',
+            headers: {
+                  'Content-Type': 'application/json'
+            }
+      })
+            .then(response => response.json())
+            .then(response => {
+                  if (response.code == 0) {
+                        $('#name_customer_purchased').val(response.customer.name);
+                        $('#phone_customer_purchased').val(response.customer.phone);
+                        $('#address_customer_purchased').val(response.customer.address);
+                        $('#historyErrorMessage').text('');
+                  } else {
+                        $('#phone_customer_purchased').val(response.customer.phone);
+
+                        $('#historyErrorMessage').text(response.message);
+                  }
+            })
+            .catch(error => {
+                  console.log('Failed to update session:', error);
+            });
+}
+
+$('#phone_customer').on('change', function () {
+      const phoneInput = $(this).val();
+      getCustomer(phoneInput);
+});
+
+$('#phone_customer').on('keydown', function () {
+
+      setTimeout(() => {
+            const phoneInput = $(this).val();
+            getCustomer(phoneInput);
+      }, 0);
+});
+function moveToHistory() {
+      $('#enterCustomerModal').modal('hide');
+      $('a[data-toggle="pill"][href="#customer-information"]').click();
+      const phone = $('#phone_customer_purchased').val();
+      console.log(phone);
+      getHistoryPurchased(phone)
+}
+
+$('#moveToHistory').on('click', moveToHistory);
+function getHistoryPurchased(phone) {
+      const url = window.location.origin;
+      fetch(`${url}/cart/customerHistoryPurchase?phone=${phone}`, {
+            method: 'GET',
+            headers: {
+                  'Content-Type': 'application/json'
+            }
+      })
+            .then(data => data.json())
+            .then(data => {
+                  if (data.code === 0) {
+                        UpdateUIHistoryPurchased(data.data);
+                  }
+            })
+            .catch(error => {
+                  console.log('Failed to update session:', error);
+            });
+}
+
+function UpdateUIHistoryPurchased(historyData) {
+      const tbody = document.getElementById('bodyHistoryPurchaseCustomer');
+
+      // Clear existing rows in tbody
+      tbody.innerHTML = '';
+
+      // Iterate through historyData and create table rows
+      historyData.forEach((purchase, index) => {
+            const tr = document.createElement('tr');
+
+            // Assuming purchase has properties like id, customer, totalprice, payment, refund, createdAt
+            tr.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${purchase.id}</td>
+              <td>${purchase.totalprice}</td>
+              <td>${purchase.payment}</td>
+              <td>${purchase.refund}</td>
+              <td class="dateOfPurchase">${purchase.createdAt}</td>
+              <td>
+                  <div class="d-flex align-items-center list-action">
+                     
+                      <a type="button" class="btn-orderdetail-information badge badge-warning mr-2"
+                          data-id="${purchase.id}" data-toggle="modal" data-placement="top">
+                          <i class="fa-solid fa-receipt"></i>
+                      </a>
+                  </div>
+              </td>
+          `;
+
+            tbody.appendChild(tr);
+      });
+      const dateElements = document.querySelectorAll('.dateOfPurchase');
+      dateElements.forEach(formatDate);
+}
+
+function formatDate(dateElement) {
+      const dateString = dateElement.textContent;
+      const date = new Date(dateString);
+      const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'Asia/Ho_Chi_Minh'
+      };
+      dateElement.textContent = new Intl.DateTimeFormat('vi-VN', options).format(date);
+}
 
 
 function getCustomer(phoneInput) {
@@ -58,11 +216,20 @@ function getCustomer(phoneInput) {
                         $('#name_customer').val(response.customer.name);
                         $('#phone_customer').val(response.customer.phone);
                         $('#address_customer').val(response.customer.address);
+                        $('#name_customer_purchased').val(response.customer.name);
+                        $('#phone_customer_purchased').val(response.customer.phone);
+                        $('#address_customer_purchased').val(response.customer.address);
+                        $('#paymentErrorMessage').text('');
+                        $('#historyErrorMessage').text('');
+                        // const phone = response.customer.phone
+
                   } else {
                         $('#phone_customer').val(response.phone);
                         $('#paymentErrorMessage').text(response.message);
+                        $('#historyErrorMessage').text(response.message);
 
-                        
+
+
                   }
             })
             .catch(error => {
@@ -172,7 +339,7 @@ function updateCartUI(cart) {
             cartTableBody.appendChild(emptyCartRow);
       }
 }
-function remove_item(item_id) { 
+function remove_item(item_id) {
       const url = window.location.origin;
       fetch(`${url}/cart/remove_item?id=${item_id}`, {
             method: 'GET',
@@ -193,7 +360,6 @@ function remove_item(item_id) {
             })
             .catch(e => console.log(e.errorAlert));
 }
-
 function updateTotalPrice(inputElement) {
       const quantity = parseInt(inputElement.value);
       const pricePerUnit = parseInt(inputElement.closest('tr').querySelector('#product_price').textContent);
@@ -204,7 +370,6 @@ function updateTotalPrice(inputElement) {
       const productId = inputElement.dataset.id;
       updateSession(productId, quantity);
 }
-
 function updateSession(key, value) {
       const url = window.location.origin;
       fetch(`${url}/cart/updateQuantityItem`, {
@@ -227,8 +392,6 @@ function updateSession(key, value) {
                   console.log('Failed to update session:', error);
             });
 }
-
-
 function updateTotalCartPrice() {
       const quantityInputs = document.querySelectorAll('.quantity-input');
       const productPrices = document.querySelectorAll('#product_price');
@@ -248,7 +411,6 @@ function updateTotalCartPrice() {
             console.log("Element with id 'totalpricecart' not found");
       }
 }
-
 function showError(message) {
       var errorMessageElement = document.getElementById('paymentErrorMessage');
       errorMessageElement.innerHTML = message;
@@ -262,5 +424,45 @@ function showError(message) {
       }, 2000);
 }
 
+
+getOrderdetails = id => {
+      const url = window.location.origin;
+      fetch(`${url}/cart/getOrderdetails?id=${id}`, {
+            method: 'GET',
+            headers: {
+                  'Content-Type': 'application/json'
+            }
+      })
+            .then(response => response.json())
+            .then(response => {
+                  if (response.code == 0) {
+                        updateOrderDetailsTable(response.data)
+                  } else {
+                        console.log('Fail to fetch history purchase');
+                  }
+            })
+            .catch(error => {
+                  console.log('Failed to update session:', error);
+            });
+};
+function updateOrderDetailsTable(orderDetails) {
+      const tableBody = document.getElementById('body-orderdetail');
+
+      tableBody.innerHTML = '';
+
+      orderDetails.forEach((detail, index) => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+              <td class="text-center">${index + 1}</td>
+              <td>${detail.id}</td>
+              <td><img src="../assets/images/table/product/${detail.Product.image}" alt="Product Image" width="50"></td>
+              <td class="text-center">${detail.quantity}</td>
+              <td class="text-center">${detail.Product.retailprice}</td>
+              <td class="text-center">${detail.quantity * detail.Product.retailprice}</td>
+          `;
+
+            tableBody.appendChild(newRow);
+      });
+}
 
 

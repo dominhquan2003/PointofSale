@@ -6,7 +6,21 @@ const moment = require('moment-timezone');
 
 class OrderController {
       async historyPurchase(req, res) {
+            const { phone } = req.query
+            const customer = await Customer.findOne({ where: { phone } });
+            if (!customer) {
+                  return res.json({ code: 1, message: " !!!!!! THIS IS NEW CUSTOMER" });
+            }
+            else {
+                  const orders = await Order.findAll({
+                        where: {
+                              customerId: customer.id,
+                        }
 
+                  });
+                  return res.json({ code: 0, data: orders, message: "Get all order of customer successfully" });
+
+            }
       }
       async getOrderdetails(req, res) {
             const id = req.query.id;
@@ -17,7 +31,7 @@ class OrderController {
                         message: "Order id is not found",
                   })
             } else {
-                  
+
                   const orderDetails = await Orderdetail.findAll({
                         where: { orderid: id },
                         include: [{
@@ -107,7 +121,7 @@ class OrderController {
                         message: 'Cannot get USER iD '
                   })
             } else {
-                  const orders = await Order.findAll({ where: { userId : id } })
+                  const orders = await Order.findAll({ where: { userId: id } })
                   return res.json({
                         code: 0,
                         message: 'Get USER iD successfully',
