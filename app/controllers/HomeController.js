@@ -9,8 +9,7 @@ class HomeController {
                   res.redirect('/authen/login');
             } else {
                   const name = req.cookies.user.fullname;
-                  const avatar = req.cookies.user.avatar;
-                  res.render('home', { warning, name, avatar });
+                  res.render('home', { warning, name });
             }
 
       }
