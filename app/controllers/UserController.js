@@ -34,6 +34,8 @@ class UserController {
       async addUserAccount(req, res, next) {
             let { name, email, phone, role, status, password, gender, address, age } = req.body
             const avatar = req.file;
+            let nameAvatar ;
+            avatar ? nameAvatar = avatar.originalname : nameAvatar = 'deafaultmen.jpg';
             const username = email.split('@')[0];
             password = username;
             const Accountexist = await Account.findOne({ where: { email } });
@@ -41,7 +43,7 @@ class UserController {
             if (Accountexist ) {
                   const error = 'This Email is existed !'
                   return res.render('users/page-add-users', { error, name, phone, role, status, password, gender,address,age })
-            }else if (phoneUser) {
+            }if (phoneUser) {
                   const error = 'This Phone is existed !'
                   return res.render('users/page-add-users', { error, name, phone, role, status, password, gender,address,age })
             } else {
@@ -58,7 +60,7 @@ class UserController {
                         await User.create(
                               {
                                     fullname: name, phone, role, address,age,
-                                    status, gender, accountId: newAccount.id, avatar: avatar.originalname
+                                    status, gender, accountId: newAccount.id, avatar: nameAvatar
                               },
                               { transaction }
                         );
