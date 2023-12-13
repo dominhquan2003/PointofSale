@@ -48,6 +48,7 @@ function fetchGetOrderByTimeline(start, end) {
 }
 authorizationReport = (data) => {
       if (data.role === 'Admin') {
+            console.log(data.totalProfit);
             $('#totalprice').text(data.totalprice + ' VND');
             $('#totalorderssold').text(data.totalOrders);
             $('#totalproduct').text(data.totalProduct);

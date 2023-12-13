@@ -83,8 +83,6 @@ class OrderController {
                                     },
                               ],
                         });
-
-
                         for (const order of orders) {
                               totalOrders += 1;
                               totalOrderPrice += order.totalprice;
@@ -93,7 +91,6 @@ class OrderController {
                                     const productProfit = orderDetail.Product.importprice * orderDetail.quantity;
                                     totalImport += productProfit;
                               }
-
                         }
                         totalProfit = totalOrderPrice - totalImport;
                         res.json({
