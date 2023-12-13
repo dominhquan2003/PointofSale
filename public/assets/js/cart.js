@@ -150,13 +150,15 @@ function UpdateUIHistoryPurchased(historyData) {
       historyData.forEach((purchase, index) => {
             const tr = document.createElement('tr');
 
-            // Assuming purchase has properties like id, customer, totalprice, payment, refund, createdAt
+            const totalprice = formatMoney1(`${purchase.totalprice}`)
+            const payment = formatMoney1(`${purchase.payment}`)
+            const refund = formatMoney1(`${purchase.refund}`)
             tr.innerHTML = `
               <td>${index + 1}</td>
               <td>${purchase.id}</td>
-              <td>${purchase.totalprice}</td>
-              <td>${purchase.payment}</td>
-              <td>${purchase.refund}</td>
+              <td>${totalprice}</td>
+              <td>${payment}</td>
+              <td>${refund}</td>
               <td class="dateOfPurchase">${purchase.createdAt}</td>
               <td>
                   <div class="d-flex align-items-center list-action">
@@ -270,7 +272,7 @@ function updateCartUI(cart) {
             cart.forEach(item => {
                   const row = document.createElement('tr');
                   row.id = `${item.product_id}`;
-                 
+
                   var product_price = formatMoney1(`${item.product_price}`)
                   row.innerHTML = `
                     <td>
@@ -325,7 +327,7 @@ function updateCartUI(cart) {
                         var totalCustomer = document.getElementById('total_customer');
                         var totalPriceCart = document.getElementById('totalpricecart');
                         const totalCart = formatMoney1(totalPriceCart.innerText)
-                       
+
                         totalCustomer.value = totalCart;
                   }
             });
@@ -373,7 +375,7 @@ function updateTotalPrice(inputElement) {
       const quantity = parseInt(inputElement.value);
       const pricePerUnit = parseInt(inputElement.closest('tr').querySelector('#product_price').textContent);
       const totalPrice = isNaN(quantity) ? 0 : quantity * pricePerUnit;
-      
+
       inputElement.closest('tr').querySelector('.total-price-col').textContent = totalPrice;
       updateTotalCartPrice();
       // Update session
@@ -461,14 +463,17 @@ function updateOrderDetailsTable(orderDetails) {
       tableBody.innerHTML = '';
 
       orderDetails.forEach((detail, index) => {
+            const retailPrice = formatMoney1(`${detail.Product.retailprice}`)
+            let tmp = detail.quantity * detail.Product.retailprice
+            const subtotal = formatMoney1(`${tmp}`)
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
               <td class="text-center">${index + 1}</td>
               <td>${detail.id}</td>
               <td><img src="../assets/images/table/product/${detail.Product.image}" alt="Product Image" width="50"></td>
               <td class="text-center">${detail.quantity}</td>
-              <td class="text-center">${detail.Product.retailprice}</td>
-              <td class="text-center">${detail.quantity * detail.Product.retailprice}</td>
+              <td class="text-center">${retailPrice}</td>
+              <td class="text-center">${subtotal}</td>
           `;
 
             tableBody.appendChild(newRow);
