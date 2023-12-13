@@ -53,7 +53,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="ligth-body" >
+                        <tbody class="ligth-body">
                             {{#each users}}
                             <tr class="userList_{{this.id}}" id="{{this.id}}">
                                 <td>{{sum @index 1}}</td>
@@ -195,20 +195,20 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive-sm">
-                            <table class="table">
+                            <table class="table text-center">
                                 <thead>
                                     <tr>
                                         <th class="text-center black" scope="col">#Index</th>
                                         <th scope="col" class="black">Order ID</th>
-                                        <th>Total </th>
-                                        <th class="text-center black" scope="col">Cash</th>
-                                        <th class="text-center black" scope="col">Refund</th>
+                                        <th>Total  <small>VND</small></th>
+                                        <th class="text-center black" scope="col">Cash <small>VND</small></th>
+                                        <th class="text-center black" scope="col">Refund <small>VND</small></th>
                                         <th>Status</th>
                                         <th>Created Date</th>
 
                                     </tr>
                                 </thead>
-                                <tbody id="tbody_userOrder" class="text-center">
+                                <tbody id="tbody_userOrder" >
 
 
                                 </tbody>
@@ -279,8 +279,8 @@
             console.log(id);
             getUserOrders(id);
         });
-        function getUserOrders(id) {  
-            const url = window.location.origin;  
+        function getUserOrders(id) {
+            const url = window.location.origin;
             fetch(`${url}/users/getUserOrders?id=${id}`, {
                 method: 'GET',
                 headers: {
@@ -298,19 +298,25 @@
         UpdateUIUserOrder = data => {
             const tbody = document.getElementById('tbody_userOrder');
             tbody.innerHTML = '';
-            data.data.forEach((order, index)=> {
+            data.data.forEach((order, index) => {
                 const row = document.createElement('tr');
                 const statusBadge = order.status === 1
                     ? '<span class="badge badge-success" id="paid">Paid</span>'
                     : '<span class="badge badge-danger" id="unpaid">Unpaid</span>';
 
                 const formattedDate = new Date(order.createdAt).toLocaleString();
+                const totalprice = formatMoneyUser(`${order.totalprice}`)
+                const payment = formatMoneyUser(`${order.payment}`)
+
+                const refund = formatMoneyUser(`${order.refund}`)
+
+
                 row.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${order.id}</td>
-                    <td>${order.totalprice}</td>
-                    <td>${order.payment}</td>
-                    <td>${order.refund}</td>
+                    <td>${totalprice}</td>
+                    <td>${payment}</td>
+                    <td>${refund}</td>
                     <td>${statusBadge}</td>
                     <td>${formattedDate}</td>
                     
@@ -320,6 +326,11 @@
             });
         }
     });
+    function formatMoneyUser(value) {
+        var formattedPrice = parseFloat(value).toLocaleString('vi-VN');
+        return formattedPrice;
+    }
+
 
 
 
