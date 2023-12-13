@@ -39,38 +39,27 @@ $(document).ready(function () {
                   $('#paymentErrorMessage').text('Cash is not enough to pay this invoice.');
                   return;
             }
+
+
             $('#checkForm').submit();
 
 
       });
-
-      // Use event delegation on a static parent element (in this case, the table with id 'bodyHistoryPurchaseCustomer')
       $('#bodyHistoryPurchaseCustomer').on('click', '.btn-orderdetail-information', function () {
             const id = $(this).data('id');
             console.log(id);
             $('#informationOrderdetailModal').modal('show');
             getOrderdetails(id);
       });
-
-      const dateElements = document.querySelectorAll('.dateOfPurchase');
-      dateElements.forEach(formatDate);
-      function formatDate(dateElement) {
-            const dateString = dateElement.textContent;
-            const date = new Date(dateString);
-            const options = {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                  timeZone: 'Asia/Ho_Chi_Minh'
-            };
-            dateElement.textContent = new Intl.DateTimeFormat('vi-VN', options).format(date);
-      }
-
+      formatMoney()
 
 });
+
+function formatMoney1(value) {
+      var formattedPrice = parseFloat(value).toLocaleString('vi-VN');
+      return formattedPrice;
+}
+
 
 $('#phone_customer_purchased').on('change', function () {
       const phoneInput = $(this).val();
@@ -273,6 +262,7 @@ function addToCart(id) {
                   console.error('Error adding to cart:', error);
             });
 }
+
 function updateCartUI(cart) {
       const cartTableBody = document.getElementById('cartTableBody'); // Adjust this based on your HTML structure
       cartTableBody.innerHTML = '';
@@ -280,6 +270,8 @@ function updateCartUI(cart) {
             cart.forEach(item => {
                   const row = document.createElement('tr');
                   row.id = `${item.product_id}`;
+                 
+                  var product_price = formatMoney1(`${item.product_price}`)
                   row.innerHTML = `
                     <td>
                         <div class="crm-profile-img-edit position-relative">
@@ -305,6 +297,7 @@ function updateCartUI(cart) {
                 `;
                   cartTableBody.appendChild(row);
 
+
             });
             const totalRow = document.createElement('tr');
             totalRow.innerHTML = `
@@ -325,20 +318,36 @@ function updateCartUI(cart) {
             </td>
             `;
             cartTableBody.appendChild(checkoutRow);
+
             document.getElementById('cartTableBody').addEventListener('click', function (e) {
                   if (e.target && e.target.id === 'btn-enter-checkout') {
                         e.preventDefault();
                         var totalCustomer = document.getElementById('total_customer');
                         var totalPriceCart = document.getElementById('totalpricecart');
-                        totalCustomer.value = totalPriceCart.innerText;
+                        const totalCart = formatMoney1(totalPriceCart.innerText)
+                       
+                        totalCustomer.value = totalCart;
                   }
             });
+            formatMoney()
       } else {
             const emptyCartRow = document.createElement('tr');
             emptyCartRow.innerHTML = ` <td colspan="5" align="center"><h3 style="color:#888;">Your Cart is empty</h3></td>  `;
             cartTableBody.appendChild(emptyCartRow);
       }
 }
+function formatMoney() {
+      var elements = document.querySelectorAll('.formatmoney');
+      elements.forEach(function (element) {
+            var retailPrice = element.textContent.trim();
+            var formattedPrice = parseFloat(retailPrice).toLocaleString('vi-VN');
+            var div = document.createElement('div');
+            div.innerHTML = formattedPrice + ' <sp>VND</sp>';
+            element.innerHTML = div.innerHTML;
+      });
+}
+
+
 function remove_item(item_id) {
       const url = window.location.origin;
       fetch(`${url}/cart/remove_item?id=${item_id}`, {
@@ -364,6 +373,7 @@ function updateTotalPrice(inputElement) {
       const quantity = parseInt(inputElement.value);
       const pricePerUnit = parseInt(inputElement.closest('tr').querySelector('#product_price').textContent);
       const totalPrice = isNaN(quantity) ? 0 : quantity * pricePerUnit;
+      
       inputElement.closest('tr').querySelector('.total-price-col').textContent = totalPrice;
       updateTotalCartPrice();
       // Update session

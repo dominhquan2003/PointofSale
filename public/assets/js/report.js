@@ -29,58 +29,61 @@ $(document).ready(function () {
 
 
 
-function fetchGetOrderByTimeline(start, end) {
-      const url = window.location.origin;
-      fetch(`${url}/report/getOrder?startDate=${start}&endDate=${end}`, {
-            method: 'GET',
-            headers: {
-                  'Content-Type': 'application/json',
-            },
-      })
-            .then(response => response.json())
-            .then(data => {
-                  authorizationReport(data)
-                  UpdateUIReport(data)
-                  console.log(data);
-
+      function fetchGetOrderByTimeline(start, end) {
+            const url = window.location.origin;
+            fetch(`${url}/report/getOrder?startDate=${start}&endDate=${end}`, {
+                  method: 'GET',
+                  headers: {
+                        'Content-Type': 'application/json',
+                  },
             })
-            .catch(error => console.log('Error fetching orders:', error));
-}
-authorizationReport = (data) => {
-      if (data.role === 'Admin') {
-            console.log(data.totalProfit);
-            $('#totalprice').text(data.totalprice + ' VND');
+                  .then(response => response.json())
+                  .then(data => {
+                        authorizationReport(data)
+                        UpdateUIReport(data)
+                        console.log(data);
+
+                  })
+                  .catch(error => console.log('Error fetching orders:', error));
+      }
+      authorizationReport = (data) => {
+            const totalprice = formatMoneyReport(data.totalprice);
+            const totalProfit = formatMoneyReport(data.totalProfit);
+        
+            $('#totalprice').empty().append(totalprice).append('<small> VND </small>');
             $('#totalorderssold').text(data.totalOrders);
             $('#totalproduct').text(data.totalProduct);
-            $('#totalprofit').text(data.totalProfit + ' VND');
-      } else {
-            $('#totalprice').text(data.totalprice + ' VND');
-            $('#totalorderssold').text(data.totalOrders);
-            $('#totalproduct').text(data.totalProduct);
-      }
-}
+        
+            if (data.role === 'Admin') {
+                $('#totalprofit').empty().append(totalProfit).append('<small> VND </small>');
+            }
+        };
+        
 
-UpdateUIReport = (data) => {
-      if (data.role != 'Admin') {
-            $("#profit-report").hide();
-      }
+      UpdateUIReport = (data) => {
+            if (data.role != 'Admin') {
+                  $("#profit-report").hide();
+            }
 
-      const tbody = document.getElementById('tbodyreport');
+            const tbody = document.getElementById('tbodyreport');
 
-      // Clear existing rows
-      tbody.innerHTML = '';
-      data.orders.forEach(order => {
-            const row = document.createElement('tr');
-            const statusBadge = order.status === 1
-                  ? '<span class="badge badge-success" id="paid">Paid</span>'
-                  : '<span class="badge badge-danger" id="unpaid">Unpaid</span>';
+            
+            tbody.innerHTML = '';
+            data.orders.forEach(order => {
+                  const totalprice = formatMoneyReport(`${order.totalprice}`)
+                  const payment = formatMoneyReport(`${order.payment}`)
+                  const refund = formatMoneyReport(`${order.refund}`)
+                  const row = document.createElement('tr');
+                  const statusBadge = order.status === 1
+                        ? '<span class="badge badge-success" id="paid">Paid</span>'
+                        : '<span class="badge badge-danger" id="unpaid">Unpaid</span>';
 
-            const formattedDate = new Date(order.createdAt).toLocaleString();
-            row.innerHTML = `
+                  const formattedDate = new Date(order.createdAt).toLocaleString();
+                  row.innerHTML = `
             <td>${order.id}</td>
-            <td>${order.totalprice}</td>
-            <td>${order.payment}</td>
-            <td>${order.refund}</td>
+            <td>${totalprice}</td>
+            <td>${payment}</td>
+            <td>${refund}</td>
             <td>${statusBadge}</td>
             <td>${formattedDate}</td>
             <td>
@@ -95,45 +98,46 @@ UpdateUIReport = (data) => {
             </td>
         `;
 
-            tbody.appendChild(row);
-      });
-
-}
-
-
-
-getOrderdetails = (id) => {
-      const url = window.location.origin;
-
-      fetch(`${url}/report/getOrderdetails?id=${id}`, {
-            method: 'GET',
-            header: {
-                  'Content-Type': 'application/json'
-            }
-      })
-            .then(response => response.json())
-            .then(response => {
-                  if (response.code == 0) {
-                        console.log(response.data);
-                        UpdateUIOrderDetail_Report(response.data);
-                  } else {
-                        console.log("Fail");
-                  }
-            })
-            .catch(error => {
-                  console.log('Failed to update session:', error);
+                  tbody.appendChild(row);
             });
 
+      }
 
-}
+      getOrderdetails = (id) => {
+            const url = window.location.origin;
 
-function UpdateUIOrderDetail_Report(orderDetails) {
-      const tbody = document.querySelector('#body-orderdetail_report');
-      tbody.innerHTML = '';
+            fetch(`${url}/report/getOrderdetails?id=${id}`, {
+                  method: 'GET',
+                  header: {
+                        'Content-Type': 'application/json'
+                  }
+            })
+                  .then(response => response.json())
+                  .then(response => {
+                        if (response.code == 0) {
+                              console.log(response.data);
+                              UpdateUIOrderDetail_Report(response.data);
+                        } else {
+                              console.log("Fail");
+                        }
+                  })
+                  .catch(error => {
+                        console.log('Failed to update session:', error);
+                  });
 
-      orderDetails.forEach((detail, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
+
+      }
+
+      function UpdateUIOrderDetail_Report(orderDetails) {
+            const tbody = document.querySelector('#body-orderdetail_report');
+            tbody.innerHTML = '';
+
+            orderDetails.forEach((detail, index) => {
+                  const tr = document.createElement('tr');
+                  const retailPrice = formatMoneyReport(`${detail.Product.retailprice}`)
+                  let tmp  = detail.quantity * detail.Product.retailprice
+                  const subtotal = formatMoneyReport(`${tmp}`)
+                  tr.innerHTML = `
             <th class="text-center black" scope="row">${index + 1}</th>
             <td class="black">${detail.id}</td>
             <td>
@@ -144,10 +148,15 @@ function UpdateUIOrderDetail_Report(orderDetails) {
             </div>
             </td>
             <td class="text-center black">${detail.quantity}</td>
-            <td class="text-center black">${detail.Product.retailprice}</td>
-            <td class="text-center black">${detail.quantity * detail.Product.retailprice}</td>
+            <td class="text-center black">${retailPrice}</td>
+            <td class="text-center black">${subtotal}</td>
           `;
-            tbody.appendChild(tr);
-      });
-}
+                  tbody.appendChild(tr);
+            });
+      }
+      function formatMoneyReport(value) {
+            var formattedPrice = parseFloat(value).toLocaleString('vi-VN');
+            return formattedPrice ;
+      }
+      
 });
