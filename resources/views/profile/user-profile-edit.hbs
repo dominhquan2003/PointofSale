@@ -59,11 +59,11 @@
                                             <div class="col-md-12">
                                                 <div class="profile-img-edit">
                                                     <div class="crm-profile-img-edit">
-                                                        <img class="crm-profile-pic rounded-circle avatar-100"
+                                                        <img class="crm-profile-pic rounded-circle avatar-100" id="profileImage"
                                                             src="../assets/images/user/{{user.avatar}}" alt="profile-pic">
                                                         <div class="crm-p-image bg-primary">
                                                             <i class="las la-pen upload-button"></i>
-                                                            <input class="file-upload"  type="file" accept="image/*" name="image">
+                                                            <input class="file-upload"  type="file" accept="image/*" name="image" id="imageInput">
                                                             
                                                         </div>
                                                     </div>
@@ -172,3 +172,19 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('imageInput').addEventListener('change', function (e) {
+        var profileImage = document.getElementById('profileImage');
+
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Update the src attribute of the image
+                profileImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+</script>
