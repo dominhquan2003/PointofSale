@@ -36,10 +36,14 @@ class UserController {
             const avatar = req.file;
             const username = email.split('@')[0];
             password = username;
-            const Accountexist = await Account.findOne({ where: { email: email } });
-            if (Accountexist) {
+            const Accountexist = await Account.findOne({ where: { email } });
+            const phoneUser = await User.findOne({ where: { phone } });
+            if (Accountexist ) {
                   const error = 'This Email is existed !'
-                  return res.render('users/page-add-users', { error, name, phone, role, status, password, gender })
+                  return res.render('users/page-add-users', { error, name, phone, role, status, password, gender,address,age })
+            }else if (phoneUser) {
+                  const error = 'This Phone is existed !'
+                  return res.render('users/page-add-users', { error, name, phone, role, status, password, gender,address,age })
             } else {
                   const timestamp = Date.now();
                   let transaction
@@ -53,7 +57,7 @@ class UserController {
                         );
                         await User.create(
                               {
-                                    fullname: name, phone, role, address,
+                                    fullname: name, phone, role, address,age,
                                     status, gender, accountId: newAccount.id, avatar: avatar.originalname
                               },
                               { transaction }

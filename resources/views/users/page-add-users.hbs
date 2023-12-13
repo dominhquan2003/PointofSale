@@ -53,8 +53,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Age *</label>
-                                        <input type="int" class="form-control" placeholder="Enter your age" 
-                                            name="age">
+                                        <input type="number" class="form-control" placeholder="Enter your age" 
+                                            name="age" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -93,9 +93,10 @@
                                     <div class="form-group">
                                         <label>Image</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="customFile" name="image" required>
+                                            <input type="file" class="custom-file-input" id="customFile" name="image">
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                         </div>
+                                        <small>Can choose profile for user or let it empty and user will update their profile after create account</small>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
