@@ -85,6 +85,7 @@ ALTER TABLE orderdetail AUTO_INCREMENT = 0  ;
 INSERT INTO product (name, importprice, retailprice, quantity, barcode, image, categoryid,createdAt) 
 VALUES
     ('Iphone 14 plus blue', 19000000,28000000, 20, '4567890123456', '14_plus_xanh.png', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
+    ('Iphone 14 promax purple', 32000000,38000000, 20, '890132154889', '14promaxtim.png', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('Iphone 14 promax black', 32000000,38000000, 20, '8901234567890', 'iphone-14-pro-max-den.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('Iphone 15 promax blue', 32000000,38000000, 20, '8901234273462', '15promaxblue.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
     ('Iphone 15 plus', 32000000,38000000, 20, '8423742684238', 'iphone15plus.jpg', (SELECT id FROM category WHERE name = 'Apple'), NOW()),
@@ -122,11 +123,11 @@ VALUES
     ('Xiaomi 13C', 11000000,13000000, 30, '163264563304', 'xiaomi-13C.jpg', (SELECT id FROM category WHERE name = 'Xiaomi'), NOW()),
     ('Oppo A95', 9000000,12500000, 35, '356911113486', 'oppo-a95.jpg', (SELECT id FROM category WHERE name = 'Oppo'), NOW()),
 
--- INSERT INTO category (name, image, code) VALUES
---     ('Huawei', 'huawei.png', 'HW2023001'),
---     ('Asus', 'asus_icon.png', 'AS2023001'),
---     ('Vivo', 'vivo_icon.png', 'VO2023001'),
---     ('Oppo', 'oppo_icon.png', 'OP2023001'),
---     ('Apple', 'apple-logo.png', 'AP2023001'),
---     ('Samsung', 'samsung_icon.png', 'SA2023001'),
---     ('Xiaomi', 'xiaomi_logo.png', 'XM2023001'),
+INSERT INTO category (name, image, code) VALUES
+    ('Huawei', 'huawei.png', 'HW2023001'),
+    ('Asus', 'asus_icon.png', 'AS2023001'),
+    ('Vivo', 'vivo_icon.png', 'VO2023001'),
+    ('Oppo', 'oppo_icon.png', 'OP2023001'),
+    ('Apple', 'apple-logo.png', 'AP2023001'),
+    ('Samsung', 'samsung_icon.png', 'SA2023001'),
+    ('Xiaomi', 'xiaomi_logo.png', 'XM2023001'),

@@ -42,8 +42,6 @@ $(document).ready(function () {
 
 
             $('#checkForm').submit();
-
-
       });
       $('#bodyHistoryPurchaseCustomer').on('click', '.btn-orderdetail-information', function () {
             const id = $(this).data('id');
@@ -51,7 +49,7 @@ $(document).ready(function () {
             $('#informationOrderdetailModal').modal('show');
             getOrderdetails(id);
       });
-      formatMoney()
+      formatmoney()
 
 });
 
@@ -256,6 +254,7 @@ function addToCart(id) {
             .then(data => {
                   if (data.code === 0) {
                         updateCartUI(data.data);
+                        
                         updateTotalCartPrice()
 
                   }
@@ -326,19 +325,19 @@ function updateCartUI(cart) {
                         e.preventDefault();
                         var totalCustomer = document.getElementById('total_customer');
                         var totalPriceCart = document.getElementById('totalpricecart');
-                        const totalCart = formatMoney1(totalPriceCart.innerText)
+                        // const totalCart = formatMoney1(totalPriceCart.innerText)
 
-                        totalCustomer.value = totalCart;
+                        totalCustomer.value = totalPriceCart.innerText;
                   }
             });
-            formatMoney()
+            
       } else {
             const emptyCartRow = document.createElement('tr');
             emptyCartRow.innerHTML = ` <td colspan="5" align="center"><h3 style="color:#888;">Your Cart is empty</h3></td>  `;
             cartTableBody.appendChild(emptyCartRow);
       }
 }
-function formatMoney() {
+function formatmoney() {
       var elements = document.querySelectorAll('.formatmoney');
       elements.forEach(function (element) {
             var retailPrice = element.textContent.trim();

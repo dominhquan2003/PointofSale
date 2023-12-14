@@ -71,9 +71,9 @@
         <div id="loading-center">
         </div>
     </div>
-    
+
     <div class="container">
-          <a href="/cart/saleInterface" class="header-logo d-flex align-items-center mb-5">
+        <a href="/cart/saleInterface" class="header-logo d-flex align-items-center mb-5">
             <img src="../assets/images/logo.png" class="img-fluid rounded-normal" width="2%" alt="logo">
             <h5 class="logo-title ml-1 mt-2">Back to Sale Interface</h5>
         </a>
@@ -177,10 +177,11 @@
                                                 <td>
                                                     <h6 class="black mb-0">{{this.Product.name}}</h6>
                                                 </td>
-                                                <td class="black text-center">{{this.quantity}}</td>
-                                                <td class="black text-center">{{this.price}}</td>
+                                                <td class="black text-center" >{{this.quantity}}</td>
+                                                <td class="black text-center formatmoney">{{this.price}}</td>
                                                 <td class="black text-center">
-                                                    <b id="total">{{multiply this.quantity this.price}}</b>
+                                                    <b id="total" class="formatmoney">{{multiply this.quantity
+                                                        this.price}}</b>
                                                 </td>
                                             </tr>
                                             {{/each}}
@@ -205,7 +206,7 @@
 
                                     <div class="ttl-amt py-2 px-3 d-flex justify-content-between align-items-center">
                                         <h5 class="black">Total</h5>
-                                        <h3 class="text-primary" id="totalprice">
+                                        <h3 class="text-primary formatmoney" id="totalprice" >
                                             {{order.totalprice}} VND <h3>
                                     </div>
                                 </div>
@@ -216,7 +217,7 @@
             </div>
         </div>
 
-      
+
     </div>
 
 
@@ -237,8 +238,20 @@
             window.jsPDF = window.jspdf.jsPDF;
             document.getElementById('printButton').addEventListener('click', printInvoice);
             document.getElementById('downloadPDFButton').addEventListener('click', downloadPDF);
-
+            formatMoney()
         })
+
+        function formatMoney() {
+            var elements = document.querySelectorAll('.formatmoney');
+            elements.forEach(function (element) {
+                var retailPrice = element.textContent.trim();
+                var formattedPrice = parseFloat(retailPrice).toLocaleString('vi-VN');
+                var div = document.createElement('div');
+                div.innerHTML = formattedPrice + ' <sp>VND</sp>';
+                element.innerHTML = div.innerHTML;
+            });
+        }
+
         function printInvoice() {
             window.print();
         }

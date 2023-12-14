@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const ProductController = require('../app/controllers/ProductController');
 const checkLogin = require('../authentication/checkToken');
+const checkAdmin = require('../middleware/checkAdmin');
+
 const multer = require('multer')
 const path = require('path');
 const pathstorageimage  =  path.join(__dirname, '../public/assets/images/table/product/' )
@@ -17,8 +19,8 @@ const upload = multer({ storage: storage })
 
 
 router.get('/',checkLogin, ProductController.getListProducts);
-router.get('/add',checkLogin, ProductController.getAddProducts);
-router.get('/:id', checkLogin, ProductController.getUpdateProduct) ;
+router.get('/add',checkLogin,checkAdmin, ProductController.getAddProducts);
+router.get('/:id', checkLogin,checkAdmin, ProductController.getUpdateProduct) ;
 
 router.post('/addProduct',checkLogin,upload.single('image') ,ProductController.postAddProducts);
 router.delete('/delete',checkLogin,upload.single('image'), ProductController.deleteProducts);

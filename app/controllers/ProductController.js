@@ -18,7 +18,7 @@ class ProductController {
                   }
             } catch (error) {
                   console.log('Error fetching categories:', error);
-                
+
             }
       }
       async getAddProducts(req, res, next) {
@@ -36,7 +36,7 @@ class ProductController {
                   res.render('products/page-update-product', { product, brandname, error });
             } catch (error) {
                   console.log('Error fetching categories:', error);
-                  
+
             }
       }
       async postAddProducts(req, res, next) {
@@ -57,7 +57,7 @@ class ProductController {
                         return res.redirect('/products/');
                   } catch (error) {
                         console.log('Error fetching categories:', error);
-                      
+
                   }
             } else {
                   req.flash('error', 'Name và barcode must be unique.');
@@ -74,6 +74,14 @@ class ProductController {
             const orderdetail = await Orderdetail.findOne({ where: { productid: id } });
             if (!orderdetail) {
                   await Product.destroy({ where: { id: id } })
+                  if (req.session.cart) {
+                        for (let i = 0; i < req.session.cart.length; i++) {
+                              if (req.session.cart[i].product_id == id) {
+                                    req.session.cart.splice(i, 1); // Remove the product from the cart
+                                    break;
+                              }
+                        }
+                  }
                   return res.json({ code: 0, message: 'Đã xóa sản phẩm thành công' });
             } else {
 
@@ -98,6 +106,8 @@ class ProductController {
                                     req.session.cart[i].product_name = name;
                                     req.session.cart[i].product_price = rprice;
                                     req.session.cart[i].maxquantity = quantity;
+                                   
+                                   
                               }
                         }
                   }
@@ -117,7 +127,7 @@ class ProductController {
                                     req.session.cart[i].product_name = name;
                                     req.session.cart[i].product_price = parseFloat(rprice);
                                     req.session.cart[i].maxquantity = quantity;
-
+                                    req.session.cart[i].product_image = file.originalname;
                               }
                         }
                   }
