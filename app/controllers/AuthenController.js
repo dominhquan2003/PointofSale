@@ -47,8 +47,8 @@ class AuthenController {
             const account = await Account.findOne({ where: { username: name } });
             if (accountAdmin) {
                   const match = await bcrypt.compare(password, accountAdmin.password);
-                  const user = await User.findOne({ where: { accountId: accountAdmin.id } });
-                  if (match && accountAdmin.username === 'admin') {
+                  const user = await User.findOne({ where: { accountId: accountAdmin.id } });   
+                  if (match && name === 'admin') {
                         const token = jwt.sign({ username: name, role: 'Admin' }, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 * 24 });
                         res.cookie('Authorization', `Bearer ${token}`)
                         res.cookie('user', user);
