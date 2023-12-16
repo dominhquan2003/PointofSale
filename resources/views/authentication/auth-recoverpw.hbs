@@ -48,28 +48,43 @@
                                           </div>
                                           <div class="floating-label form-group">
                                              <input class="floating-input form-control" type="password" placeholder=" "
-                                                name="password">
+                                                name="password" id="password-reset">
                                              <label>Password</label>
                                           </div>
-                                       </div>
-                                    </div>
 
-                                    {{#if warning}}
-                                    <div class="col-md-12">
-                                       <div class="alert alert-primary" role="alert">
-                                          <div class="iq-alert-icon">
-                                             <i class="fa-solid fa-triangle-exclamation"></i>
+                                       </div>
+
+
+
+                                       {{#if warning}}
+                                       <div class="col-md-12">
+                                          <div class="alert alert-primary" role="alert">
+                                             <div class="iq-alert-icon">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                             </div>
+                                             <div class="iq-alert-text"> {{warning}}</div>
                                           </div>
-                                          <div class="iq-alert-text">   {{warning}}</div>
+                                       </div>
+                                       {{/if}}
+
+                                       <div class="col-lg-6 mb-3">
+                                          <div class="custom-control custom-checkbox">
+                                             <input type="checkbox" class="custom-control-input" id="showpassword"
+                                                name="showpassword" onchange="togglePassword()">
+                                             <label class="custom-control-label control-label-1" for="showpassword">Show
+                                                Password</label>
+                                          </div>
+
+                                       </div>
+                                       <div class="col-lg-6">
+                                          <a href="/authen/login" class="text-primary float-right"> Back to login
+                                          </a>
+                                       </div>
+                                       <div class="col-lg-6">
+
+                                          <button type="submit" class="btn btn-primary">Reset</button>
                                        </div>
                                     </div>
-                                    {{/if}}
-
-                                    {{!-- <div class="col-lg-6"> --}}
-                                          <a href="/authen/login" class="text-primary float-right"> Back to login
-                                             </a>
-                                       {{!-- </div> --}}
-                                    <button type="submit" class="btn btn-primary">Reset</button>
                                  </form>
 
 
@@ -103,23 +118,32 @@
    <script src="../assets/js/app.js"></script>
    <script>
       document.addEventListener('DOMContentLoaded', function () {
-            function hideElementWithTimeout(element, timeout) {
-                if (element) {
-                    setTimeout(function () {
-                        element.style.transition = "opacity 0.5s";
-                        element.style.opacity = 0;
+         function hideElementWithTimeout(element, timeout) {
+            if (element) {
+               setTimeout(function () {
+                  element.style.transition = "opacity 0.5s";
+                  element.style.opacity = 0;
 
-                        setTimeout(function () {
-                            element.style.display = "none";
-                        }, 500);
-                    }, timeout);
-                }
+                  setTimeout(function () {
+                     element.style.display = "none";
+                  }, 500);
+               }, timeout);
             }
-            hideElementWithTimeout(document.querySelector('.alert-success'), 2000);
-            hideElementWithTimeout(document.querySelector('.alert-primary'), 4000);
-            hideElementWithTimeout(document.querySelector('.alert-danger'), 2000);
-           
-        });
+         }
+         hideElementWithTimeout(document.querySelector('.alert-success'), 2000);
+         hideElementWithTimeout(document.querySelector('.alert-primary'), 4000);
+         hideElementWithTimeout(document.querySelector('.alert-danger'), 2000);
+
+      });
+      function togglePassword() {
+         var passwordInput = document.getElementById("password-reset");
+         var showPasswordCheckbox = document.getElementById("showpassword");
+         if (showPasswordCheckbox.checked) {
+            passwordInput.type = "text";
+         } else {
+            passwordInput.type = "password";
+         }
+      }
    </script>
 </body>
 
