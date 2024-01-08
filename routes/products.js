@@ -3,7 +3,6 @@ const router = express.Router();
 const ProductController = require('../app/controllers/ProductController');
 const checkLogin = require('../authentication/checkToken');
 const checkAdmin = require('../middleware/checkAdmin');
-
 const multer = require('multer')
 const path = require('path');
 const pathstorageimage  =  path.join(__dirname, '../public/assets/images/table/product/' )

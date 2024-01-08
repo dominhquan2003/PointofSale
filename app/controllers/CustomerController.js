@@ -1,7 +1,5 @@
 
-const { Account, User, Product, Orderdetail, Order, Customer } = require('../../models');
-const { Op } = require('sequelize');
-const { sequelize } = require('../../config/db')
+const { Customer } = require('../../models');
 require('dotenv').config()
 class CustomerController {
       async getListCustomer(req, res, next) {
@@ -10,8 +8,4 @@ class CustomerController {
       }
      
 }
-
-
-
-
 module.exports = new CustomerController() 

@@ -7,7 +7,6 @@ const CategoryRouter = require('./category');
 const CustomerRouter = require('./customer');
 const ErrorRouter = require('./error');
 const CartRouter = require('./cart');
-const OrderRouter = require('./order');
 const InvoiceRouter = require('./invoice');
 const ReportRouter = require('./report');
 
@@ -19,8 +18,6 @@ function routes(app) {
   app.use('/invoice', InvoiceRouter);
 
   app.use('/cart', CartRouter);
-
-  app.use('/order', OrderRouter);
 
   app.use('/products', ProductRouter);
 

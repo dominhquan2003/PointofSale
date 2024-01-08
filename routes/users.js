@@ -21,8 +21,6 @@ router.get('/',checkLogin,checkAdmin, UserController.getListUsers);
 router.get('/add',checkLogin,checkAdmin, UserController.getAddUsers);
 router.get('/getUserOrders',checkLogin,checkAdmin, OrderController.getUserOrders); 
 router.get('/:id',checkLogin,checkAdmin, UserController.getDetailtUsers);
-
-
 router.post('/add',checkLogin, upload.single('image'), UserController.addUserAccount);
 router.post('/lockUser',checkLogin,  UserController.lockUser);
 

@@ -40,7 +40,6 @@ class AuthenController {
             const email = req.session.email || '';
             res.render('authentication/auth-confirm-mail', { email, layout: false });
       }
-
       async loginPost(req, res, next) {
             const { name, password, remember } = req.body
             const accountAdmin = await Account.findOne({ where: { username: 'admin' } });
@@ -169,7 +168,6 @@ class AuthenController {
                   return res.redirect('/authen/recover');
             }
       }
-
       async resendMail(req, res, next) {
             const { id } = req.body;
             const account = await Account.findByPk(id);
@@ -178,7 +176,6 @@ class AuthenController {
             const confirmationLink = `${process.env.URL}authen/login?timestamp=${timestamp}&token=${token}`;
             await mailer.sendMail(account.email, 'Created Account for user (POS)', confirmationLink)
       }
-
       async changePassword(req, res, next) {
             const { cpass, npass, vpass } = req.body;
             const username = req.user.username;

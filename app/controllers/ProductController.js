@@ -1,6 +1,5 @@
 const { Category, Product, Orderdetail } = require('../../models');
 class ProductController {
-
       async getListProducts(req, res, next) {
             try {
                   const success = req.flash('success') || '';

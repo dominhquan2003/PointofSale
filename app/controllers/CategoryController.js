@@ -1,6 +1,4 @@
 const { Category } = require('../../models');
-
-
 class CategoryController {
       async getListCategories(req, res, next) {
             const categories = await Category.findAll();
@@ -26,7 +24,6 @@ class CategoryController {
             const error = req.flash('error') || '';
             res.render('categories/page-update-category', { category, error });
       }
-
       async updateCategories(req, res, next) {
             const { name, code } = req.body;
             const codeExist = req.params.code
@@ -44,8 +41,6 @@ class CategoryController {
 
             }
       }
-
-
       async addCategories(req, res, next) {
             const { name, code } = req.body;
             const file = req.file;
@@ -71,9 +66,5 @@ class CategoryController {
             return res.json({ code: 0, message: 'Đã xóa sản phẩm thành công' });
 
       }
-
-
-
-
 }
 module.exports = new CategoryController() 

@@ -12,12 +12,7 @@ class InvoiceController {
                               required: true,
                         }],
                   });
-                 
-
-                 
                   const formattedDate = moment.utc(order.createdAt).tz('Asia/Ho_Chi_Minh');
-                  
-            
                   const ordertime  = formattedDate.format('YYYY-MM-DD HH:mm:ss');
                   
                   return res.render('invoice/pages-invoice', { order, ordertime , orderDetails, layout: false });

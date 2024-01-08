@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const CategoryController = require('../app/controllers/CategoryController');
+const categoryController = require('../app/controllers/CategoryController');
 const checkLogin = require('../authentication/checkToken');
 const checkAdmin = require('../middleware/checkAdmin');
 const multer = require('multer')
@@ -17,16 +17,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 
-router.get('/',checkLogin,checkAdmin, CategoryController.getListCategories);
+router.get('/',checkLogin,checkAdmin, categoryController.getListCategories);
 
-router.get('/add',checkLogin,checkAdmin, CategoryController.getAddCategories);
+router.get('/add',checkLogin,checkAdmin, categoryController.getAddCategories);
 
-router.post('/add',checkLogin,checkAdmin, upload.single('image'), CategoryController.addCategories);
+router.post('/add',checkLogin,checkAdmin, upload.single('image'), categoryController.addCategories);
 
-router.get('/:code',checkLogin,checkAdmin, CategoryController.getUpdateCategories);
+router.get('/:code',checkLogin,checkAdmin, categoryController.getUpdateCategories);
 
-router.post('/update/:code',checkLogin,checkAdmin, CategoryController.updateCategories )
+router.post('/update/:code',checkLogin,checkAdmin, categoryController.updateCategories )
 
-router.delete('/delete',checkLogin,checkAdmin, CategoryController.deleteCategories);
+router.delete('/delete',checkLogin,checkAdmin, categoryController.deleteCategories);
 
 module.exports = router;
