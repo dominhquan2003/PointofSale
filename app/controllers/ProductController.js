@@ -1,4 +1,6 @@
 const { Category, Product, Orderdetail } = require('../../models');
+const { Op } = require('sequelize');
+const { sequelize } = require('../../config/db')
 class ProductController {
       async getListProducts(req, res, next) {
             try {
@@ -105,8 +107,8 @@ class ProductController {
                                     req.session.cart[i].product_name = name;
                                     req.session.cart[i].product_price = rprice;
                                     req.session.cart[i].maxquantity = quantity;
-                                   
-                                   
+
+
                               }
                         }
                   }
@@ -135,8 +137,45 @@ class ProductController {
             }
 
       }
+      async topProducts() {
+            const topProductsOrderdetail = await Orderdetail.findAll({
+                  attributes: ['productid', [sequelize.fn('SUM', sequelize.col('Orderdetail.quantity')), 'totalQuantity']],
+                  group: ['productid'],
+                  order: [[sequelize.literal('totalQuantity'), 'DESC']],
+                  limit: 4,
+                  include: [
+                        {
+                              model: Product,
+                              required: true
+                        }
+                  ]
+            });
+            const topProductsData = topProductsOrderdetail.map(orderDetail => orderDetail.get({ plain: true }));
+            return topProductsData ; 
+      }
+      async BestproductsAllTime(){
+            const bestProducts = await Orderdetail.findAll({
+                  attributes: [
+                    'productid',
+                    [
+                      sequelize.literal(
+                        `(SUM(Orderdetail.quantity) * product.retailprice) - (SUM(Orderdetail.quantity) * product.importprice)`
+                      ),
+                      'totalEarnings'
+                    ]
+                  ],
+                  group: ['productid'],
+                  order: [[sequelize.literal('totalEarnings'), 'DESC']],
+                  limit: 3,
+                  include: [
+                    {
+                      model: Product,
+                      required: true
+                    }
+                  ]
+                });
+            const bestProductsData = bestProducts.map(orderDetail => orderDetail.get({ plain: true }));
+            return bestProductsData ; 
+      }
 }
-
-
-
 module.exports = new ProductController() 

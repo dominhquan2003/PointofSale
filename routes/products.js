@@ -22,7 +22,7 @@ router.get('/add',checkLogin,checkAdmin, ProductController.getAddProducts);
 router.get('/:id', checkLogin,checkAdmin, ProductController.getUpdateProduct) ;
 
 router.post('/addProduct',checkLogin,upload.single('image') ,ProductController.postAddProducts);
-router.delete('/delete',checkLogin,upload.single('image'), ProductController.deleteProducts);
 router.post('/updateProduct/:id',checkLogin,upload.single('image'), ProductController.updateProduct);
+router.delete('/delete',checkLogin,upload.single('image'), ProductController.deleteProducts);
 
 module.exports = router;
