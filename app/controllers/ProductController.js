@@ -151,31 +151,32 @@ class ProductController {
                   ]
             });
             const topProductsData = topProductsOrderdetail.map(orderDetail => orderDetail.get({ plain: true }));
-            return topProductsData ; 
+            return topProductsData;
       }
-      async BestproductsAllTime(){
+      async BestproductsAllTime() {
             const bestProducts = await Orderdetail.findAll({
                   attributes: [
-                    'productid',
-                    [
-                      sequelize.literal(
-                        `(SUM(Orderdetail.quantity) * product.retailprice) - (SUM(Orderdetail.quantity) * product.importprice)`
-                      ),
-                      'totalEarnings'
-                    ]
+                        'productid',
+                        [
+                              sequelize.literal(
+                                    `(SUM(Orderdetail.quantity) * product.retailprice) - (SUM(Orderdetail.quantity) * product.importprice)`
+                              ),
+                              'totalEarnings'
+                        ],
+                        [sequelize.fn('SUM', sequelize.col('Orderdetail.quantity')), 'totalQuantity']
                   ],
                   group: ['productid'],
                   order: [[sequelize.literal('totalEarnings'), 'DESC']],
                   limit: 3,
                   include: [
-                    {
-                      model: Product,
-                      required: true
-                    }
+                        {
+                              model: Product,
+                              required: true
+                        }
                   ]
-                });
+            });
             const bestProductsData = bestProducts.map(orderDetail => orderDetail.get({ plain: true }));
-            return bestProductsData ; 
+            return bestProductsData;
       }
 }
 module.exports = new ProductController() 
